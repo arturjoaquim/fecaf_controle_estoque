@@ -27,3 +27,4 @@ class Produto(orm.Model):
 
     Usuario_: Mapped["Usuario"] = relationship("Usuario", back_populates="Produto")
     Movimentacao: Mapped[list["Movimentacao"]] = relationship("Movimentacao", back_populates="Produto_")
+

@@ -4,10 +4,10 @@ from datetime import date
 
 @dataclass
 class ProdutoDTO:
-    id_produto: int = 0
-    nome_produto: str = ""
-    descricao_produto: str = ""
-    indicador_ativo: str = ""
-    quantia_estoque_minimo: int = 0
-    id_usuario: int = 0
+    id_produto: int = None
+    nome_produto: str = None
+    descricao_produto: str = None
+    indicador_ativo: str = None
+    quantia_estoque_minimo: int = None
+    id_usuario: int = None
     data_cadastro: date = field(default_factory=date.today)

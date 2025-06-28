@@ -5,7 +5,7 @@ from flask import Blueprint, flash, request
 
 from flaskrc.commons.mappers.ProdutoDTOMapper import ProdutoDTOMapper
 from flaskrc.models.Produto import Produto
-from flaskrc.repositories.ProdutoRepository import ProdutoRepository
+from flaskrc.services.Produto.RegistrarProdutoService import RegistrarProdutoService
 
 if TYPE_CHECKING:
     from flaskrc.commons.dtos import ProdutoDTO
@@ -17,15 +17,16 @@ bp_api = Blueprint("api-produto", __name__, url_prefix="/api/produto")
 def cadastrar_produto() -> str | None:
     if (request.method == "POST"):
         try:
-            produto_repository = ProdutoRepository() 
+            registrar_service = RegistrarProdutoService() 
             produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
                 campos_obrigatorios=["nome_produto",
                                      "descricao_produto",
                                      "quantia_estoque_minimo"]
             )
-            produto : ProdutoDTO = produto_mapper.load(request.form)
-            produto_repository.registrar_produto(Produto(**produto.__dict__))
-            print(produto)
+            produto_dto : ProdutoDTO = produto_mapper.load(request.form)
+            novo_produto: ProdutoDTO = registrar_service.registrar_produto(produto_dto, 1)
+            print(produto_dto)
+            print(novo_produto)
         except Exception as error:
             print(traceback.print_exc())
             flash(error.__str__(), "error")
