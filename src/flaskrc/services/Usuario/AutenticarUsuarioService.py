@@ -21,15 +21,14 @@ class AutenticarUsuarioService:
 
     def validar_usuario_existe(self) -> None:
         if self.usuario is None:
-            msg = "Usuario ou senha inválidos"
+            msg = "Usuario não existe"
             raise NegocioError(msg)
 
     def validar_senha(self, senha_usr:str) -> None:
         ph = PasswordHasher()
-        senha_hash: str = ph.hash(senha_usr)
 
         try:
-            ph.verify(senha_hash, self.usuario.senha_usr)
+            ph.verify(self.usuario.senha_usr, senha_usr)
         except VerifyMismatchError as error:
             msg = "Usuario ou senha inválidos"
             raise NegocioError(msg) from error
