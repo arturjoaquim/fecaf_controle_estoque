@@ -18,9 +18,10 @@ class Usuario(orm.Model):
     __tablename__ = "Usuario"
 
     id_usr: Mapped[int] = mapped_column(Integer, primary_key=True)
-    nm_usr: Mapped[str] = mapped_column(Text)
-    dt_cad: Mapped[date] = mapped_column(Date)
-    ic_atv: Mapped[str] = mapped_column(CHAR(1))
+    nome_usr: Mapped[str] = mapped_column("nm_usr", Text)
+    data_cadastro: Mapped[date] = mapped_column("dt_cad", Date)
+    indicador_ativo: Mapped[str] = mapped_column("ic_atv", CHAR(1))
+    senha_usr: Mapped[str] = mapped_column("psw_usr", Text)
 
     Produto: Mapped[list["Produto"]] = relationship("Produto", back_populates="Usuario_")
     UsuarioAcessoDetalhe: Mapped[list["UsuarioAcessoDetalhe"]] = relationship("UsuarioAcessoDetalhe", back_populates="Usuario_")

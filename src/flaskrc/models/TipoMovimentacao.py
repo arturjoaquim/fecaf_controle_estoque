@@ -16,10 +16,10 @@ if TYPE_CHECKING:
 class TipoMovimentacao(orm.Model):
     __tablename__ = "TipoMovimentacao"
 
-    nm_tp_mov: Mapped[str] = mapped_column(Text)
-    ds_tp_mov: Mapped[str] = mapped_column(Text)
-    ic_mov: Mapped[str] = mapped_column(CHAR(1))
-    dt_cad: Mapped[date] = mapped_column(Date)
-    id_tp_mov: Mapped[int] = mapped_column(Integer, primary_key=True)
+    nome_tipo_mov: Mapped[str] = mapped_column("nm_tp_mov", Text)
+    descricao_tipo_mov: Mapped[str] = mapped_column("ds_tp_mov", Text)
+    indicador_movimento: Mapped[str] = mapped_column("ic_mov", CHAR(1))
+    data_cadastro: Mapped[date] = mapped_column("dt_cad", Date)
+    id_tipo_mov: Mapped[int] = mapped_column("id_tp_mov", Integer, primary_key=True)
 
     Movimentacao: Mapped[list["Movimentacao"]] = relationship("Movimentacao", back_populates="TipoMovimentacao_")

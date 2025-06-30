@@ -3,7 +3,8 @@ import os  # noqa: N999
 from flask import Flask
 
 from flaskrc.config import DatabaseConfig
-from flaskrc.config.SQLAlchemyConfig import sql_alchemy
+from flaskrc.config.FlaskLoginConfig import login_manager
+from flaskrc.config.SQLAlchemyConfig import finalizar_transacao, sql_alchemy
 from flaskrc.controllers.AutenticacaoController import bp as bp_autenticacao
 from flaskrc.controllers.AutenticacaoController import bp_api as bp_autenticacao_api
 from flaskrc.controllers.ProdutoController import bp as bp_produto
@@ -12,8 +13,11 @@ from flaskrc.models import *  # noqa: F403
 
 
 def adicionar_cli_iniciar_banco(app: Flask) -> None:
-    app.teardown_appcontext(DatabaseConfig.fechar_conexao)
+    # app.teardown_appcontext(DatabaseConfig.fechar_conexao)
     app.cli.add_command(DatabaseConfig.iniciar_db_cli)
+
+def adicionar_controle_transacional_por_sessao(app: Flask) -> None:
+    app.teardown_appcontext(finalizar_transacao)
 
 def configurar_app(app) -> None:
     app.config.from_mapping(
@@ -29,3 +33,5 @@ def configurar_app(app) -> None:
     app.register_blueprint(bp_autenticacao)
     app.register_blueprint(bp_autenticacao_api)
     sql_alchemy.init_app(app)
+    login_manager.init_app(app)
+    adicionar_controle_transacional_por_sessao(app)

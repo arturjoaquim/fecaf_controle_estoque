@@ -23,7 +23,7 @@ def cadastrar_produto() -> str | None:
                                     "quantia_estoque_minimo"]
         )
         produto_dto : ProdutoDTO = produto_mapper.load(request.form)
-        novo_produto: ProdutoDTO = registrar_service.registrar_produto(produto_dto, 1) # TODO @<ARTUR>: pegar o id do usuario logado
+        novo_produto: ProdutoDTO = registrar_service.registrar_produto(produto_dto, 2) # TODO @<ARTUR>: pegar o id do usuario logado
         print(produto_dto)
         print(novo_produto)
         flash("Sucesso", "error")

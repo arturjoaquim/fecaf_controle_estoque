@@ -1,7 +1,7 @@
 from datetime import date
 
 from flaskrc.commons.dtos.ProdutoDTO import ProdutoDTO
-from flaskrc.commons.mappers.ModelDictMapper import ModelDictMapper
+from flaskrc.commons.mappers.ModelMapperGenerico import converter_para_dicionario
 from flaskrc.models.Produto import Produto
 from flaskrc.repositories.ProdutoRepository import ProdutoRepository
 
@@ -13,7 +13,6 @@ class RegistrarProdutoService:
             Registra um novo produto no sistema.
         """
         produto_repository: ProdutoRepository = ProdutoRepository()
-        model_dict_mapper: ModelDictMapper = ModelDictMapper()
         produto: Produto = Produto(**produto_dto.__dict__)
 
         produto.indicador_ativo = "A"
@@ -21,4 +20,4 @@ class RegistrarProdutoService:
         produto.data_cadastro = date.today()
         produto_repository.registrar_produto(produto)
 
-        return ProdutoDTO(**model_dict_mapper.converter_para_dicionario(produto))
+        return ProdutoDTO(**converter_para_dicionario(produto))

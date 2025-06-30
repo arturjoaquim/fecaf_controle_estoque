@@ -18,13 +18,13 @@ if TYPE_CHECKING:
 class Movimentacao(orm.Model):
     __tablename__ = "Movimentacao"
 
-    id_prd: Mapped[int] = mapped_column(ForeignKey("Produto.id_prd"))
-    id_tp_mov: Mapped[int] = mapped_column(ForeignKey("TipoMovimentacao.id_tp_mov"))
-    qtd_mov: Mapped[int] = mapped_column(Integer)
-    dt_mov: Mapped[date] = mapped_column(Date)
-    dt_cad: Mapped[date] = mapped_column(Date)
-    id_usr: Mapped[int] = mapped_column(ForeignKey("Usuario.id_usr"))
-    id_mov: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_produto: Mapped[int] = mapped_column("id_prd", ForeignKey("Produto.id_prd"))
+    id_tipo_movimento: Mapped[int] = mapped_column("id_tp_mov", ForeignKey("TipoMovimentacao.id_tp_mov"))
+    quantia_movimentada: Mapped[int] = mapped_column("qtd_mov", Integer)
+    data_movimentacao: Mapped[date] = mapped_column("dt_mov", Date)
+    data_cadastro: Mapped[date] = mapped_column("dt_cad", Date)
+    id_usuario: Mapped[int] = mapped_column("id_usr", ForeignKey("Usuario.id_usr"))
+    id_movimentacao: Mapped[int] = mapped_column("id_mov", Integer, primary_key=True)
 
     Produto_: Mapped["Produto"] = relationship("Produto", back_populates="Movimentacao")
     TipoMovimentacao_: Mapped["TipoMovimentacao"] = relationship("TipoMovimentacao", back_populates="Movimentacao")

@@ -12,10 +12,10 @@ if TYPE_CHECKING:
 class GrupoAcesso(orm.Model):
     __tablename__ = "GrupoAcesso"
 
-    nm_grp_acs: Mapped[str] = mapped_column(Text)
-    ds_grp_acs: Mapped[str] = mapped_column(Text)
-    ic_atv: Mapped[str] = mapped_column(CHAR(1))
-    dt_cad: Mapped[date] = mapped_column(Date)
-    id_grp_acs: Mapped[int] = mapped_column(Integer, primary_key=True)
+    nome_grupo_acesso: Mapped[str] = mapped_column("nm_grp_acs", Text)
+    descricao_grupo_acesso: Mapped[str] = mapped_column("ds_grp_acs", Text)
+    indicador_ativo: Mapped[str] = mapped_column("ic_atv", CHAR(1))
+    data_cadastro: Mapped[date] = mapped_column("dt_cad", Date)
+    id_grupo_acesso: Mapped[int] = mapped_column("id_grp_acs", Integer, primary_key=True)
 
     UsuarioAcessoDetalhe: Mapped[list["UsuarioAcessoDetalhe"]] = relationship("UsuarioAcessoDetalhe", back_populates="GrupoAcesso_")

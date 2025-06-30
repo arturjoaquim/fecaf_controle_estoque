@@ -6,4 +6,5 @@ class ProdutoRepository:
 
     def registrar_produto(self, produto: Produto) -> Produto:
         orm.session.add(produto)
+        orm.session.flush()
         return produto
