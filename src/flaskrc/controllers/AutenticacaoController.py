@@ -6,6 +6,6 @@ bp_api = Blueprint("api-autenticacao", __name__, url_prefix="/api/autenticacao")
 @bp.route("/registro", methods=["GET", "POST"])
 def registrar_usuario() -> None | str:
     if (request.method == "POST"):
-        return None
+        return None # TODO @<ARTUR>: implementar registro de usuario
 
-    return "registro"
+    return "registro" # TODO @<ARTUR>: implementar pagina de registro

@@ -1,7 +1,5 @@
 from datetime import date
 
-from sqlalchemy.inspection import inspect
-
 from flaskrc.commons.dtos.ProdutoDTO import ProdutoDTO
 from flaskrc.commons.mappers.ModelDictMapper import ModelDictMapper
 from flaskrc.models.Produto import Produto
