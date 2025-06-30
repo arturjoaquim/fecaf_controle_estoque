@@ -1,5 +1,11 @@
+from typing import TYPE_CHECKING
+
+from flaskrc.commons.querybuilders.ProdutoQueryBuilder import ProdutoQueryBuilder
 from flaskrc.config.SQLAlchemyConfig import sql_alchemy as orm
 from flaskrc.models.Produto import Produto
+
+if TYPE_CHECKING:
+    from sqlalchemy import Select
 
 
 class ProdutoRepository:
@@ -8,3 +14,15 @@ class ProdutoRepository:
         orm.session.add(produto)
         orm.session.flush()
         return produto
+
+    def consultar_produtos(self, filtro: Produto) -> set[Produto]:
+        query_builder = ProdutoQueryBuilder()
+        query_builder.com_nome(filtro.nome_produto)
+        query_builder.com_data_cadastro(filtro.data_cadastro)
+        query_builder.com_indicador_ativo(filtro.indicador_ativo)
+        query_builder.com_id_usuario(filtro.id_usuario)
+        query_builder.com_estoque_minimo(filtro.quantia_estoque_minimo)
+        comando_sql: Select = query_builder.construir_consulta()
+
+        return orm.session.execute(comando_sql).scalars().all()
+

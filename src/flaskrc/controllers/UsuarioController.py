@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from flask import Blueprint, flash, request, redirect
+from flask import Blueprint, flash, request
 from flask_login import login_user
 
 from flaskrc.commons.mappers.UsuarioDTOMapper import UsuarioDTOMapper
