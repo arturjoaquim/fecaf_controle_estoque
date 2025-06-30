@@ -1,1 +1,0 @@
-#TODO @<ARTUR>: implementar serviço de registrar usuário

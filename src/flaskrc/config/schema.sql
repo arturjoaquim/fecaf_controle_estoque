@@ -3,18 +3,18 @@ PRAGMA foreign_keys = ON;
 -- Tabela Usuario
 CREATE TABLE IF NOT EXISTS Usuario (
   id_usr INTEGER NOT NULL PRIMARY KEY,
-  nm_usr TEXT NOT NULL,
+  nm_usr TEXT NOT NULL UNIQUE,
   psw_usr TEXT NOT NULL,
   dt_cad DATE NOT NULL,
-  ic_atv TEXT NOT NULL
+  ic_atv CHAR(1) NOT NULL
 );
 
 -- Tabela Produto
 CREATE TABLE IF NOT EXISTS Produto (
   id_prd INTEGER NOT NULL PRIMARY KEY,
-  nm_prd TEXT NOT NULL,
+  nm_prd TEXT NOT NULL UNIQUE,
   ds_prd TEXT NOT NULL,
-  ic_atv TEXT NOT NULL,
+  ic_atv CHAR(1) NOT NULL,
   qtd_est_min INTEGER NOT NULL,
   id_usr INTEGER NOT NULL,
   dt_cad DATE NOT NULL,
@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS Produto (
 -- Tabela TipoMovimentacao
 CREATE TABLE IF NOT EXISTS TipoMovimentacao (
   id_tp_mov INTEGER NOT NULL PRIMARY KEY,
-  nm_tp_mov TEXT NOT NULL,
+  nm_tp_mov TEXT NOT NULL UNIQUE,
   ds_tp_mov TEXT NOT NULL,
-  ic_mov TEXT NOT NULL,
+  ic_mov CHAR(1) NOT NULL,
   dt_cad DATE NOT NULL
 );
 
@@ -47,9 +47,9 @@ CREATE TABLE IF NOT EXISTS Movimentacao (
 -- Tabela GrupoAcesso
 CREATE TABLE IF NOT EXISTS GrupoAcesso (
   id_grp_acs INTEGER NOT NULL PRIMARY KEY,
-  nm_grp_acs TEXT NOT NULL,
+  nm_grp_acs TEXT NOT NULL UNIQUE,
   ds_grp_acs TEXT NOT NULL,
-  ic_atv TEXT NOT NULL,
+  ic_atv CHAR(1) NOT NULL,
   dt_cad DATE NOT NULL
 );
 

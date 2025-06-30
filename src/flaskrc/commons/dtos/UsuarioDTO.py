@@ -9,6 +9,7 @@ class UsuarioDTO:
     nome_usr: str = None
     data_cadastro: date = None
     indicador_ativo: str = None
+    senha_usr: str = None
     is_authenticated: bool = None
     is_anonymous: bool = False
     is_active: bool = None
@@ -17,13 +18,15 @@ class UsuarioDTO:
                 id_usr: int|None=None,
                 nome_usr:str|None=None,
                 data_cadastro:date|None=None,
-                indicador_ativo:str|None=None, *,
+                indicador_ativo:str|None=None,
+                senha_usr: str|None=None, *,
                 is_authenticated:bool=True,
                 is_anonymous:bool=False) -> None:
         self.id_usr = id_usr
         self.nome_usr = nome_usr
         self.data_cadastro = data_cadastro or date.today()
         self.indicador_ativo = indicador_ativo
+        self.senha_usr = senha_usr
         self.is_authenticated = is_authenticated
         self.is_anonymous = is_anonymous
         self.is_active = indicador_ativo == "A"
