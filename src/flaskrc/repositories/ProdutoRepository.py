@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+from flaskrc.commons.dtos.ProdutoDTO import ProdutoDTO
 from flaskrc.commons.querybuilders.ProdutoQueryBuilder import ProdutoQueryBuilder
 from flaskrc.config.SQLAlchemyConfig import sql_alchemy as orm
 from flaskrc.models.Produto import Produto
@@ -15,8 +16,8 @@ class ProdutoRepository:
         orm.session.flush()
         return produto
 
-    def consultar_produtos(self, filtro: Produto) -> set[Produto]:
-        query_builder = ProdutoQueryBuilder().selecionar_tudo()\
+    def consultar_produtos(self, filtro: ProdutoDTO) -> set[Produto]:
+        query_builder = ProdutoQueryBuilder(filtro_obrigatorio=False).selecionar_tudo()\
             .filtro_nome(filtro.nome_produto)\
             .filtro_data_cadastro(filtro.data_cadastro)\
             .filtro_indicador_ativo(filtro.indicador_ativo)\

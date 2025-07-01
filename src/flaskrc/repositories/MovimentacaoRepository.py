@@ -1,5 +1,6 @@
 from sqlalchemy import Select
 
+from flaskrc.commons.dtos.MovimentoDTO import MovimentoDTO
 from flaskrc.commons.querybuilders.MovimentacaoQueryBuilder import (
     MovimentacaoQueryBuilder,
 )
@@ -14,8 +15,10 @@ class MovimentacaoRepository:
         orm.session.flush()
         return movimento
 
-    def consultar_movimentacoes(self, filtro: Movimentacao) -> list[Movimentacao]:
-        query_builder: MovimentacaoQueryBuilder = MovimentacaoQueryBuilder()\
+    def consultar_movimentacoes(self, filtro: MovimentoDTO) -> list[Movimentacao]:
+        query_builder: MovimentacaoQueryBuilder
+        query_builder = MovimentacaoQueryBuilder(filtro_obrigatorio=False)\
+            .selecionar_tudo()\
             .filtro_data_mov(filtro.data_movimentacao)\
             .filtro_id_produto(filtro.id_produto)\
             .filtro_id_usuario(filtro.id_usuario)\

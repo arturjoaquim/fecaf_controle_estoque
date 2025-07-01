@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date
 
 
@@ -10,5 +10,5 @@ class ProdutoDTO:
     indicador_ativo: str = None
     quantia_estoque_minimo: int = None
     id_usuario: int = None
-    data_cadastro: date = field(default_factory=date.today)
+    data_cadastro: date = None
     estoque: int = None

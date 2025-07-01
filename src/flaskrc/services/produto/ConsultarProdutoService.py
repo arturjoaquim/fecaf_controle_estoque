@@ -10,9 +10,8 @@ from flaskrc.repositories.ProdutoRepository import ProdutoRepository
 class ConsultarProdutoService:
 
     def consultar_produtos(self, filtro: ProdutoDTO) -> list[ProdutoDTO] | None:
-        filtro_produto: Produto = converter_dto_para_model(filtro, Produto)
         produto_repository = ProdutoRepository()
 
-        produtos: list[Produto] = produto_repository.consultar_produtos(filtro_produto)
+        produtos: list[Produto] = produto_repository.consultar_produtos(filtro)
 
         return [ProdutoDTO(**converter_para_dicionario(produto)) for produto in produtos]

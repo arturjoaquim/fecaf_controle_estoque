@@ -24,7 +24,7 @@ class UsuarioDTO:
                 is_anonymous:bool=False) -> None:
         self.id_usr = id_usr
         self.nome_usr = nome_usr
-        self.data_cadastro = data_cadastro or date.today()
+        self.data_cadastro = data_cadastro
         self.indicador_ativo = indicador_ativo
         self.senha_usr = senha_usr
         self.is_authenticated = is_authenticated
