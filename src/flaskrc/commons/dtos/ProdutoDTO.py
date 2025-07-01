@@ -11,3 +11,4 @@ class ProdutoDTO:
     quantia_estoque_minimo: int = None
     id_usuario: int = None
     data_cadastro: date = field(default_factory=date.today)
+    estoque: int = None

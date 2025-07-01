@@ -11,6 +11,7 @@ class ProdutoDTOMapper(Schema):
     quantia_estoque_minimo = fields.Int(data_key="quantiaEstoqueMinimo")
     id_usuario = fields.Int(data_key="idUsuarioCriador")
     data_cadastro = fields.Date(data_key="dataCadastro")
+    estoque = fields.Int(data_key="estoque")
 
     def __init__(self, *, campos_obrigatorios: list | None=None, **keyargs: any) -> None:  # noqa: E501
         super().__init__(**keyargs)

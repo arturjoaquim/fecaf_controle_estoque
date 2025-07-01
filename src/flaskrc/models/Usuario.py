@@ -7,6 +7,7 @@ from sqlalchemy import CHAR, Date, Integer, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from flaskrc.config.SQLAlchemyConfig import sql_alchemy as orm
+from flaskrc.models.Produto import Produto
 
 if TYPE_CHECKING:
 
@@ -23,6 +24,6 @@ class Usuario(orm.Model):
     indicador_ativo: Mapped[str] = mapped_column("ic_atv", CHAR(1))
     senha_usr: Mapped[str] = mapped_column("psw_usr", Text)
 
-    Produto: Mapped[list["Produto"]] = relationship("Produto", back_populates="Usuario_")
+    Produto_: Mapped[list[Produto]] = relationship("Produto", back_populates="Usuario_")
     UsuarioAcessoDetalhe: Mapped[list["UsuarioAcessoDetalhe"]] = relationship("UsuarioAcessoDetalhe", back_populates="Usuario_")
-    Movimentacao: Mapped[list["Movimentacao"]] = relationship("Movimentacao", back_populates="Usuario_")
+    Movimentacao_: Mapped[list["Movimentacao"]] = relationship("Movimentacao", back_populates="Usuario_")

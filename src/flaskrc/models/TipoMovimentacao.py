@@ -22,4 +22,4 @@ class TipoMovimentacao(orm.Model):
     data_cadastro: Mapped[date] = mapped_column("dt_cad", Date)
     id_tipo_mov: Mapped[int] = mapped_column("id_tp_mov", Integer, primary_key=True)
 
-    Movimentacao: Mapped[list["Movimentacao"]] = relationship("Movimentacao", back_populates="TipoMovimentacao_")
+    Movimentacao_: Mapped[list["Movimentacao"]] = relationship("Movimentacao", back_populates="TipoMovimentacao_")

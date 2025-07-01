@@ -18,5 +18,5 @@ class UsuarioDTOMapper(Schema):
                     self.fields[campo_obrigatorio].required = True
 
     @post_load
-    def converter_para_produtodto(self, dados: dict, **kwargs: any) -> UsuarioDTO:
+    def converter_para_usuariodto(self, dados: dict, **kwargs: any) -> UsuarioDTO:
         return UsuarioDTO(**dados)

@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import Date, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from flaskrc.commons.exceptions.NegocioError import NegocioError
 from flaskrc.config.SQLAlchemyConfig import sql_alchemy as orm
 
 if TYPE_CHECKING:
@@ -26,6 +27,27 @@ class Movimentacao(orm.Model):
     id_usuario: Mapped[int] = mapped_column("id_usr", ForeignKey("Usuario.id_usr"))
     id_movimentacao: Mapped[int] = mapped_column("id_mov", Integer, primary_key=True)
 
-    Produto_: Mapped["Produto"] = relationship("Produto", back_populates="Movimentacao")
-    TipoMovimentacao_: Mapped["TipoMovimentacao"] = relationship("TipoMovimentacao", back_populates="Movimentacao")
-    Usuario_: Mapped["Usuario"] = relationship("Usuario", back_populates="Movimentacao")
+    Produto_: Mapped["Produto"] = relationship("Produto", back_populates="Movimentacao_")
+    TipoMovimentacao_: Mapped["TipoMovimentacao"] = relationship("TipoMovimentacao", back_populates="Movimentacao_")
+    Usuario_: Mapped["Usuario"] = relationship("Usuario", back_populates="Movimentacao_")
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self._validar_data_movimentacao()
+        self._validar_quantia_movimentada()
+
+    def _validar_data_movimentacao(self) -> None:
+        def _data_movimentacao_futura(self: "Movimentacao") -> None:
+            if self.data_movimentacao > date.today():
+                msg = "Data de movimentação não pode ser futura."
+                raise NegocioError(msg)
+
+        _data_movimentacao_futura(self)
+
+    def _validar_quantia_movimentada(self) -> None:
+        def _quantia_menor_igual_zero(self: "Movimentacao") -> None:
+            if self.quantia_movimentada <= 0:
+                msg = "Quantia movimentada deve ser maior que zero."
+                raise NegocioError(msg)
+
+        _quantia_menor_igual_zero(self)

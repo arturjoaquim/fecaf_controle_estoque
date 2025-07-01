@@ -5,6 +5,8 @@ from flask import Flask
 from flaskrc.config import DatabaseConfig
 from flaskrc.config.FlaskLoginConfig import login_manager
 from flaskrc.config.SQLAlchemyConfig import finalizar_transacao, sql_alchemy
+from flaskrc.controllers.MovimentacaoController import bp as bp_movimentacao
+from flaskrc.controllers.MovimentacaoController import bp_api as bp_movimentacao_api
 from flaskrc.controllers.ProdutoController import bp as bp_produto
 from flaskrc.controllers.ProdutoController import bp_api as bp_produto_api
 from flaskrc.controllers.UsuarioController import bp as bp_usuario
@@ -32,6 +34,8 @@ def configurar_app(app) -> None:
     app.register_blueprint(bp_produto_api)
     app.register_blueprint(bp_usuario)
     app.register_blueprint(bp_usuario_api)
+    app.register_blueprint(bp_movimentacao)
+    app.register_blueprint(bp_movimentacao_api)
     sql_alchemy.init_app(app)
     login_manager.init_app(app)
     adicionar_controle_transacional_por_sessao(app)

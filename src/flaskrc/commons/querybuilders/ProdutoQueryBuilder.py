@@ -7,41 +7,62 @@ from flaskrc.models.Produto import Produto
 
 class ProdutoQueryBuilder:
 
-    consulta_sql: Select
+    _consulta: Select
 
-    def __init__(self) -> None:
-        self.consulta_sql = select(Produto)
+    def selecionar_tudo(self) -> "ProdutoQueryBuilder":
+        self._consulta = select(Produto)
+        return self
 
-    def com_nome(self, nome: str) -> None:
-        if nome is not None:
-            self.consulta_sql = self.consulta_sql.where(Produto.nome_produto.like(f"%{nome}%"))  # noqa: E501
-
-    def com_data_cadastro(self, data: date) -> None:
-        if data is not None:
-            self.consulta_sql = self.consulta_sql.where(Produto.data_cadastro == data)
-
-    def com_indicador_ativo(self, indicador: str) -> None:
-        if indicador is not None:
-            self.consulta_sql = self.consulta_sql.where(Produto.indicador_ativo == indicador)  # noqa: E501
-
-    def com_descricao(self, descricao:str) -> None:
-        if descricao is not None:
-            self.consulta_sql = self.consulta_sql.where(Produto.descricao_produto.like(f"%{descricao}%"))  # noqa: E501
-
-    def com_estoque_minimo(self, estoque_minimo: int) -> None:
-        if estoque_minimo is not None:
-            self.consulta_sql = self.consulta_sql.where(Produto.quantia_estoque_minimo == estoque_minimo)  # noqa: E501
-
-    def com_id_usuario(self, id_usr: int) -> None:
-        if id_usr is not None:
-            self.consulta_sql = self.consulta_sql.where(Produto.id_usuario == id_usr)
-
-    def com_id_produto(self, id_produto: int) -> None:
+    def filtro_id(self, id_produto: int) -> "ProdutoQueryBuilder":
         if id_produto is not None:
-            self.consulta_sql = self.consulta_sql.where(Produto.id_produto == id_produto)  # noqa: E501
+            self._consulta = self._consulta.where(Produto.id_produto == id_produto)
+        return self
+
+    def filtro_nome(self, nome_produto: str) -> "ProdutoQueryBuilder":
+        if nome_produto is not None:
+            self._consulta = self._consulta.where(
+                Produto.nome_produto.like(f"%{nome_produto}%")
+            )
+        return self
+
+    def filtro_data_cadastro(self, data_cadastro: date) -> "ProdutoQueryBuilder":
+        if data_cadastro is not None:
+            self._consulta = self._consulta.where(
+                Produto.data_cadastro == data_cadastro
+            )
+        return self
+
+    def filtro_indicador_ativo(self, indicador_ativo: str) -> "ProdutoQueryBuilder":
+        if indicador_ativo is not None:
+            self._consulta = self._consulta.where(
+                Produto.indicador_ativo == indicador_ativo
+            )
+        return self
+
+    def filtro_descricao(self, descricao_produto: str) -> "ProdutoQueryBuilder":
+        if descricao_produto is not None:
+            self._consulta = self._consulta.where(
+                Produto.descricao_produto.like(f"%{descricao_produto}%")
+            )
+        return self
+
+    def filtro_estoque_minimo(self, estoque_minimo: int) -> "ProdutoQueryBuilder":
+        if estoque_minimo is not None:
+            self._consulta = self._consulta.where(
+                Produto.quantia_estoque_minimo == estoque_minimo
+            )
+        return self
+
+    def filtro_id_usuario(self, id_usuario: int) -> "ProdutoQueryBuilder":
+        if id_usuario is not None:
+            self._consulta = self._consulta.where(Produto.id_usuario == id_usuario)
+        return self
 
     def construir_consulta(self) -> Select:
-        return self.consulta_sql
+        consulta_final: Select = self._consulta
+        self.reiniciar_builder()
+        return consulta_final
 
-    def reiniciar_builder(self) -> None:
-        self.consulta_sql = select(Produto)
+    def reiniciar_builder(self) -> "ProdutoQueryBuilder":
+        self._consulta = None
+        return self

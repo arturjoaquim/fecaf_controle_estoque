@@ -5,8 +5,8 @@ from flask_login import current_user, login_required
 
 from flaskrc.commons.mappers.ProdutoDTOMapper import ProdutoDTOMapper
 from flaskrc.controllers.ControllerBase import trata_excecao_form
-from flaskrc.services.Produto.ConsultarProdutoService import ConsultarProdutoService
-from flaskrc.services.Produto.RegistrarProdutoService import RegistrarProdutoService
+from flaskrc.services.produto.ConsultarProdutoService import ConsultarProdutoService
+from flaskrc.services.produto.RegistrarProdutoService import RegistrarProdutoService
 
 if TYPE_CHECKING:
     from flaskrc.commons.dtos.ProdutoDTO import ProdutoDTO
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 bp = Blueprint("produto", __name__, url_prefix="/produto")
 bp_api = Blueprint("api-produto", __name__, url_prefix="/api/produto")
 
-@bp.route("/cadastro", methods=["GET", "POST"])
+@bp.route("/cadastrar", methods=["GET", "POST"])
 @login_required
 @trata_excecao_form("hello")
 def cadastrar_produto() -> str | None:
@@ -37,7 +37,7 @@ def cadastrar_produto() -> str | None:
         flash("Sucesso", "error")
     return "hello"
 
-@bp.route("/consulta", methods=["GET","POST"])
+@bp.route("/consultar", methods=["GET","POST"])
 @login_required
 @trata_excecao_form("Consulta produto")
 def consultar_produto() -> str | None:

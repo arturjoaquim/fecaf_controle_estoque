@@ -5,8 +5,8 @@ from flask_login import login_user
 
 from flaskrc.commons.mappers.UsuarioDTOMapper import UsuarioDTOMapper
 from flaskrc.controllers.ControllerBase import trata_excecao_form
-from flaskrc.services.Usuario.AutenticarUsuarioService import AutenticarUsuarioService
-from flaskrc.services.Usuario.RegistrarUsuarioService import RegistrarUsuarioService
+from flaskrc.services.usuario.AutenticarUsuarioService import AutenticarUsuarioService
+from flaskrc.services.usuario.RegistrarUsuarioService import RegistrarUsuarioService
 
 if TYPE_CHECKING:
     from flaskrc.commons.dtos.UsuarioDTO import UsuarioDTO
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 bp = Blueprint("usuario", __name__, url_prefix="/usuario")
 bp_api = Blueprint("api-usuario", __name__, url_prefix="/api/usuario")
 
-@bp.route("/registro", methods=["GET", "POST"])
+@bp.route("/registrar", methods=["GET", "POST"])
 @trata_excecao_form("registro")
 def registrar_usuario() -> None | str:
     if (request.method == "POST"):

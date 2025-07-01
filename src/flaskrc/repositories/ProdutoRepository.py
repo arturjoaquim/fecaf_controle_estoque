@@ -16,13 +16,18 @@ class ProdutoRepository:
         return produto
 
     def consultar_produtos(self, filtro: Produto) -> set[Produto]:
-        query_builder = ProdutoQueryBuilder()
-        query_builder.com_nome(filtro.nome_produto)
-        query_builder.com_data_cadastro(filtro.data_cadastro)
-        query_builder.com_indicador_ativo(filtro.indicador_ativo)
-        query_builder.com_id_usuario(filtro.id_usuario)
-        query_builder.com_estoque_minimo(filtro.quantia_estoque_minimo)
+        query_builder = ProdutoQueryBuilder().selecionar_tudo()\
+            .filtro_nome(filtro.nome_produto)\
+            .filtro_data_cadastro(filtro.data_cadastro)\
+            .filtro_indicador_ativo(filtro.indicador_ativo)\
+            .filtro_estoque_minimo(filtro.quantia_estoque_minimo)\
+            .filtro_id_usuario(filtro.id_usuario)
         comando_sql: Select = query_builder.construir_consulta()
 
         return orm.session.execute(comando_sql).scalars().all()
+
+    def consultar_produto_por_id(self, id_produto: int) -> Produto | None:
+        consulta = ProdutoQueryBuilder().selecionar_tudo()\
+            .filtro_id(id_produto).construir_consulta()
+        return orm.session.execute(consulta).scalar_one_or_none()
 

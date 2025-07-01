@@ -1,7 +1,7 @@
 from flask_login import LoginManager
 
 from flaskrc.commons.dtos.UsuarioDTO import UsuarioDTO
-from flaskrc.services.Usuario.ConsultarUsuarioService import (
+from flaskrc.services.usuario.ConsultarUsuarioService import (
     ConsultarUsuarioService,
 )
 
