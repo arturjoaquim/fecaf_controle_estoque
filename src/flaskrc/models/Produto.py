@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from datetime import date
+from datetime import date  # noqa: TC003
 from typing import TYPE_CHECKING
 
-from sqlalchemy import CHAR, Date, ForeignKey, Integer, ScalarSelect, Text, func, select
+from sqlalchemy import CHAR, Date, ForeignKey, Integer, Text, func, select
 from sqlalchemy.orm import Mapped, column_property, mapped_column, relationship
 
 from flaskrc.commons.enums.IndicadorMovimentoEnum import IndicadorMovimentoEnum
@@ -28,13 +28,13 @@ class Produto(orm.Model):
     id_produto: Mapped[int] = mapped_column("id_prd", Integer, primary_key=True)
 
     Usuario_: Mapped[Usuario] = relationship("Usuario", back_populates="Produto_")
-    Movimentacao_: Mapped[list[Movimentacao]] = relationship("Movimentacao", back_populates="Produto_")
+    Movimentacao_: Mapped[list[Movimentacao]] = relationship("Movimentacao", back_populates="Produto_")  # noqa: E501
 
     quantia_estoque = column_property(
         select(
             func.coalesce(func.sum(Movimentacao.quantia_movimentada), 0)
         )
-        .join(TipoMovimentacao, Movimentacao.id_tipo_movimento == TipoMovimentacao.id_tipo_mov)
+        .join(TipoMovimentacao, Movimentacao.id_tipo_movimento == TipoMovimentacao.id_tipo_mov)  # noqa: E501
         .where(
             TipoMovimentacao.indicador_movimento == IndicadorMovimentoEnum.ENTRADA.value,
             Movimentacao.id_produto == id_produto
@@ -43,7 +43,7 @@ class Produto(orm.Model):
         select(
             func.coalesce(func.sum(Movimentacao.quantia_movimentada), 0)
         )
-        .join(TipoMovimentacao, Movimentacao.id_tipo_movimento == TipoMovimentacao.id_tipo_mov)
+        .join(TipoMovimentacao, Movimentacao.id_tipo_movimento == TipoMovimentacao.id_tipo_mov)  # noqa: E501
         .where(
             TipoMovimentacao.indicador_movimento == IndicadorMovimentoEnum.SAIDA.value,
             Movimentacao.id_produto == id_produto

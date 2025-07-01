@@ -16,13 +16,15 @@ if TYPE_CHECKING:
 bp = Blueprint("produto", __name__, url_prefix="/produto")
 bp_api = Blueprint("api-produto", __name__, url_prefix="/api/produto")
 
+registrar_produto_service = RegistrarProdutoService(ProdutoRepository())
+consultar_produto_service = ConsultarProdutoService(ProdutoRepository())
+
 @bp.route("/cadastrar", methods=["GET", "POST"])
 @login_required
 @trata_excecao_form("hello")
 def cadastrar_produto() -> str | None:
     if (request.method == "POST"):
         usuario_logado: UsuarioDTO = current_user
-        registrar_service = RegistrarProdutoService()
         produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
             only=["nome_produto",
                     "descricao_produto",
@@ -32,7 +34,8 @@ def cadastrar_produto() -> str | None:
                                     "quantia_estoque_minimo"]
         )
         produto_dto : ProdutoDTO = produto_mapper.load(request.form)
-        novo_produto: ProdutoDTO = registrar_service.registrar_produto(produto_dto, usuario_logado.id_usr)  # noqa: E501
+        novo_produto: ProdutoDTO = registrar_produto_service\
+            .registrar_produto(produto_dto, usuario_logado.id_usr)
         print(produto_dto)
         print(novo_produto)
         flash("Sucesso", "error")
@@ -43,7 +46,6 @@ def cadastrar_produto() -> str | None:
 @trata_excecao_form("Consulta produto")
 def consultar_produto() -> str | None:
     if (request.method == "POST"):
-        consultar_produto_service = ConsultarProdutoService(ProdutoRepository())
         produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
             only=["nome_produto",
                     "quantia_estoque_minimo",
@@ -62,7 +64,6 @@ def consultar_produto() -> str | None:
 @login_required
 @trata_excecao_api
 def consultar_produtos_abaixo_estoque_minimo() -> str:
-    consultar_produto_service = ConsultarProdutoService(ProdutoRepository())
     produtos: list[ProdutoDTO] = consultar_produto_service\
         .consultar_produtos_abaixo_estoque_minimo()
     return ProdutoDTOMapper().dump(produtos, many=True), 200

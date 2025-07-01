@@ -43,11 +43,11 @@ class RegistrarMovimentacaoService:
         self.movimento.id_usuario = id_usr
         self.movimento.data_cadastro = date.today()
 
-        self.validar_estoque_disponivel()
+        self._validar_estoque_disponivel()
         self.movimento = self.movimento_repository.registrar_movimento(self.movimento)
         return MovimentoDTO(**converter_para_dicionario(self.movimento))
 
-    def validar_estoque_disponivel(self) -> None:
+    def _validar_estoque_disponivel(self) -> None:
         tipo_movimentacao: TipoMovimentacao = self.tipo_movimentacao_repository\
             .consultar_tipo_movimentacao_por_id(self.movimento.id_tipo_movimento)
         if tipo_movimentacao.indicador_movimento == IndicadorMovimentoEnum.SAIDA.value:

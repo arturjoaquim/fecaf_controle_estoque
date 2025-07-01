@@ -22,6 +22,15 @@ if TYPE_CHECKING:
 bp = Blueprint("movimentacao", __name__, url_prefix="/movimentacao")
 bp_api = Blueprint("api-movimentacao", __name__, url_prefix="/api/movimentacao")
 
+registrar_movimento_service = RegistrarMovimentacaoService(
+    MovimentacaoRepository(),
+    TipoMovimentacaoRepository(),
+    ProdutoRepository()
+)
+consultar_movimento_service = ConsultarMovimentacaoService(
+    MovimentacaoRepository()
+)
+
 @bp.route("/registrar", methods=["GET","POST"])
 @login_required
 @trata_excecao_form("cadastro movimento")
@@ -39,13 +48,7 @@ def registrar_movimento() -> str|None:
             only=dados_necessarios
         )
 
-        registrar_movimento_service = RegistrarMovimentacaoService(
-            MovimentacaoRepository(),
-            TipoMovimentacaoRepository(),
-            ProdutoRepository()
-        )
         usuario_logado: UsuarioDTO = current_user
-
         movimento_dto: MovimentoDTO = movimento_mapper.load(request.form)
         novo_movimento = registrar_movimento_service.registrar_movimento(
             movimento_dto, usuario_logado.id_usr
@@ -68,7 +71,6 @@ def consultar_movimento() -> str|None:
                 "data_cadastro"
             ]
         )
-        consultar_movimento_service = ConsultarMovimentacaoService()
 
         filtro: MovimentoDTO = movimento_mapper.load(request.form)
         lista_movimentos: list[MovimentoDTO] = consultar_movimento_service\

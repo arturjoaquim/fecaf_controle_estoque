@@ -6,12 +6,16 @@ from flaskrc.repositories.UsuarioRepository import UsuarioRepository
 
 class ConsultarUsuarioService:
 
-    def consultar_usuario_por_id(self, id_usr: str) -> Usuario | None:
-        usuario_repository = UsuarioRepository()
-        usuario: Usuario = usuario_repository.consultar_usuario_por_id(int(id_usr))
+    def __init__(self, usuario_repository: UsuarioRepository) -> None:
+        self.usuario_repository: UsuarioRepository = usuario_repository
+        self.usuario: Usuario = None
 
-        if usuario is None:
+    def consultar_usuario_por_id(self, id_usr: str) -> Usuario | None:
+        self.usuario: Usuario = self.usuario_repository\
+            .consultar_usuario_por_id(int(id_usr))
+
+        if self.usuario is None:
             return None
 
-        dict_usr: dict = converter_para_dicionario(usuario, campos_excluidos=["senha_usr"])  # noqa: E501
+        dict_usr: dict = converter_para_dicionario(self.usuario, campos_excluidos=["senha_usr"])  # noqa: E501
         return UsuarioDTO(**dict_usr)
