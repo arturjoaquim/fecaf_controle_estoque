@@ -30,7 +30,7 @@ class Produto(orm.Model):
     Usuario_: Mapped[Usuario] = relationship("Usuario", back_populates="Produto_")
     Movimentacao_: Mapped[list[Movimentacao]] = relationship("Movimentacao", back_populates="Produto_")
 
-    estoque = column_property(
+    quantia_estoque = column_property(
         select(
             func.coalesce(func.sum(Movimentacao.quantia_movimentada), 0)
         )

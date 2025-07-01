@@ -11,4 +11,4 @@ class ProdutoDTO:
     quantia_estoque_minimo: int = None
     id_usuario: int = None
     data_cadastro: date = None
-    estoque: int = None
+    quantia_estoque: int = None

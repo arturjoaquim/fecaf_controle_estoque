@@ -4,7 +4,8 @@ from flask import Blueprint, flash, request
 from flask_login import current_user, login_required
 
 from flaskrc.commons.mappers.ProdutoDTOMapper import ProdutoDTOMapper
-from flaskrc.controllers.ControllerBase import trata_excecao_form
+from flaskrc.controllers.ControllerBase import trata_excecao_api, trata_excecao_form
+from flaskrc.repositories.ProdutoRepository import ProdutoRepository
 from flaskrc.services.produto.ConsultarProdutoService import ConsultarProdutoService
 from flaskrc.services.produto.RegistrarProdutoService import RegistrarProdutoService
 
@@ -42,7 +43,7 @@ def cadastrar_produto() -> str | None:
 @trata_excecao_form("Consulta produto")
 def consultar_produto() -> str | None:
     if (request.method == "POST"):
-        consultar_produto_service = ConsultarProdutoService()
+        consultar_produto_service = ConsultarProdutoService(ProdutoRepository())
         produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
             only=["nome_produto",
                     "quantia_estoque_minimo",
@@ -56,3 +57,12 @@ def consultar_produto() -> str | None:
         print("----------")
         print(produtos)
     return "Consulta produto"
+
+@bp_api.route("/consultar-abaixo-estoque-minimo", methods=["GET"])
+@login_required
+@trata_excecao_api
+def consultar_produtos_abaixo_estoque_minimo() -> str:
+    consultar_produto_service = ConsultarProdutoService(ProdutoRepository())
+    produtos: list[ProdutoDTO] = consultar_produto_service\
+        .consultar_produtos_abaixo_estoque_minimo()
+    return ProdutoDTOMapper().dump(produtos, many=True), 200

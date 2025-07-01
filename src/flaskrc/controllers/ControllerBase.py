@@ -13,7 +13,7 @@ def trata_excecao_form(pagina: str) -> Callable:
     """
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
-        def wrapper(*args, **kwargs) -> None:
+        def wrapper(*args, **kwargs) -> object:
             try:
                 return func(*args, **kwargs)
             except Exception as error:  # noqa: BLE001
@@ -23,3 +23,17 @@ def trata_excecao_form(pagina: str) -> Callable:
                 return pagina
         return wrapper
     return decorator
+
+def trata_excecao_api(func: Callable) -> Callable:
+    """
+    Decorador para tratar exceções em rotas de API.
+    """
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs) -> object:
+        try:
+            return func(*args, **kwargs)
+        except Exception as error: # noqa: BLE001
+            print(traceback.print_exc())
+            orm.session.rollback()
+            return {"error": error.__str__()}, 500
+    return wrapper

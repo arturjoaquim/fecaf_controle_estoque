@@ -32,3 +32,10 @@ class ProdutoRepository:
             .filtro_id(id_produto).construir_consulta()
         return orm.session.execute(consulta).scalar_one_or_none()
 
+    def consultar_produtos_abaixo_estoque_minimo(self) -> list[Produto]:
+        consulta = (ProdutoQueryBuilder()
+                    .selecionar_tudo()
+                    .construir_consulta()
+                    .where(Produto.quantia_estoque_minimo > Produto.quantia_estoque)
+        )
+        return orm.session.execute(consulta).scalars().all()
