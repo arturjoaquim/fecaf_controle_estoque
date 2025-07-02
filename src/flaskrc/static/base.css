@@ -1,0 +1,22 @@
+@import url('global.css');
+
+.container {
+  display: grid;
+  grid-template-columns: 25rem 1fr;
+  grid-template-rows: 6rem 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar main";
+  height: 100vh;
+}
+
+/* Header */
+.header {
+  grid-area: header;
+  background-color: var(--cor-secundaria);
+  color: white;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0.2rem 0.4rem rgba(0,0,0,0.1);
+}

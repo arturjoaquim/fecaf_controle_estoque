@@ -1,0 +1,13 @@
+@import url('global.css');
+
+/* Conteúdo principal */
+.main-content {
+  grid-area: main;
+  padding: 3rem;
+  background-color: #e8f0fe;
+}
+
+.main-content h2 {
+  color: var(--cor-texto-principal);
+  margin-bottom: 1rem;
+}

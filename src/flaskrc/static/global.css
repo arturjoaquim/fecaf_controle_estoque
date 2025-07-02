@@ -1,0 +1,37 @@
+:root {
+    --cor-primaria: #2b6cb0;
+    --cor-secundaria: #1a73e8;
+    --cor-clara: #e8f0fe;
+    --cor-texto-principal: #1a237e;
+    --cor-destaque-texto: #2c5282;
+    --cor-texto: #2c3e50;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+p, a {
+  font-size: 1.6rem;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--cor-clara);
+  color: #2c3e50; 
+}

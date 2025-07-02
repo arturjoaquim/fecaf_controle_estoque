@@ -1,0 +1,104 @@
+@import url('global.css');
+
+/* Sidebar */
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--cor-primaria);
+  color: white;
+  padding: 2rem;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  margin: 1.5rem 0;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.8rem;
+  display: block;
+  border-radius: 0.4rem;
+  transition: background 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+  background-color: var(--cor-destaque-texto);
+}
+
+/* Esconde checkbox do menu dropdown */
+.sidebar input[type="checkbox"] {
+  display: none;
+}
+
+/* Label que funciona como botão do menu dropdown */
+.sidebar label.menu-label {
+  display: block;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  background-color: transparent;
+  transition: background 0.3s;
+  color: white;
+  user-select: none;
+  position: relative;
+}
+
+.sidebar label.menu-label {
+    font-size: 1.6rem;
+}
+
+/* Hover da label igual aos links */
+.sidebar label.menu-label:hover {
+  background-color: var(--cor-destaque-texto);
+}
+
+/* Ícone + ou - no lado direito do label */
+.sidebar label.menu-label::after {
+  content: '+';
+  position: absolute;
+  right: 1rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+/* Quando o checkbox estiver marcado, troca o + pelo - */
+.sidebar input[type="checkbox"]:checked + label.menu-label::after {
+  content: '-';
+}
+
+/* Submenu escondido por padrão */
+.sidebar .submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Mostrar submenu quando checkbox marcado */
+.sidebar input[type="checkbox"]:checked + label.menu-label + .submenu {
+  max-height: 100vh; /* valor alto para garantir */
+}
+
+/* Links do submenu */
+.sidebar .submenu a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 0.8rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  border-radius: 0.4rem;
+  transition: background 0.3s;
+}
+
+/* Hover links submenu */
+.sidebar .submenu a:hover {
+  background-color: var(--cor-destaque-texto);
+}
