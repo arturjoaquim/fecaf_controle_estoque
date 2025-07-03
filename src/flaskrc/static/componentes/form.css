@@ -1,11 +1,16 @@
 form {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 2rem;
     flex-wrap: wrap;
 }
 
-input, textarea {
+form label {
+    color: var(--cor-texto);
+    font-size: 1.2rem;
+}
+
+input, textarea, select {
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: var(--arredondamento-borda);
@@ -15,6 +20,10 @@ input, textarea {
 
 textarea {
     min-height: 8rem;
+}
+
+select {
+    background-color: white;
 }
 
 input:focus, textarea:focus {
@@ -27,6 +36,7 @@ input:focus, textarea:focus {
     flex: 1 1 100%;
     justify-content: flex-end;
     flex-direction: row;
+    gap: 1rem;
 }
 
 button[type="submit"] {
@@ -54,5 +64,36 @@ button[type="submit"]:active {
 
 button[type="submit"]:focus {
     outline: 3px solid var(--cor-clara);
+    outline-offset: 2px;
+}
+
+
+.botao-cancelar {
+    background-color: var(--cor-clara);
+    color: var(--cor-primaria);
+    border: 2px solid var(--cor-primaria);
+    width: auto;
+    padding: 0.75rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-radius: var(--arredondamento-borda);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+.botao-cancelar:hover {
+    background-color: var(--cor-error);
+    color: var(--cor-clara);
+    transform: translateY(-2px);
+}
+
+.botao-cancelar:active {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-clara);
+    transform: translateY(0);
+}
+
+.botao-cancelar:focus {
+    outline: 3px solid var(--cor-primaria);
     outline-offset: 2px;
 }

@@ -1,0 +1,102 @@
+<div class="modal" id="modalEditarProduto">
+    <section id="editar-produto">
+        <h2>Editar Produto</h2>
+        <form action="#" method="post" id="formEditarProduto">
+            <div class="input-item">
+                <label for="formEditarIdProduto">ID Produto</label>
+                <input type="text" name="idProduto" id="formEditarIdProduto" disabled>
+            </div>
+            <div class="input-item">
+                <label for="formEditarNomeProduto">Nome</label>
+                <input type="text" name="nomeProduto" id="formEditarNomeProduto" required>
+            </div>
+            <div class="input-item">
+                <label for="formEditarDescricaoProduto">Descrição</label>
+                <input type="text" name="descricaoProduto" id="formEditarDescricaoProduto" required>
+            </div>
+            <div class="input-item">
+                <label for="formEditarQuantiaEstoqueMinimo">Estoque Mínimo</label>
+                <input type="number" name="quantiaEstoqueMinimo" id="formEditarQuantiaEstoqueMinimo" required>
+            </div>
+            <div class="input-item">
+                <label for="formEditarIndicadorAtivo">Status</label>
+                <select name="indicadorAtivo" id="formEditarIndicadorAtivo">
+                    <option value="">Selecione o status do produto</option>
+                    <option value="A">Ativo</option>
+                    <option value="I">Inativo</option>
+                </select>
+            </div>
+            <div class="input-item">
+                <label for="formEditarQuantiaEstoque">Estoque Atual</label>
+                <input type="number" id="formEditarQuantiaEstoque" disabled>
+            </div>
+            <div class="input-item">
+                <label for="formEditarDataCadastro">Data de Cadastro</label>
+                <input type="date" name="dataCadastro" id="formEditarDataCadastro" disabled>
+            </div>
+            <div class="input-item">
+                <label for="formEditarIdUsuario">Usuário</label>
+                <input type="text" name="idUsuarioCriador" id="formEditarIdUsuario" disabled>
+            </div>
+            <div class="rodape-form">
+                <button type="button" onclick="fecharFormulario()" class="botao-cancelar">Cancelar</button>
+                <button type="submit">Salvar Alterações</button>
+            </div>
+        </form>
+    </section>
+</div>
+<style>
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* fundo escuro translúcido */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        display: none;
+        /* começa invisível */
+    }
+
+    #editar-produto {
+        background: white;
+        padding: 2rem;
+        border-radius: var(--arredondamento-borda, 8px);
+        max-width: 80rem;
+        width: 100%;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    #formEditarProduto {
+        margin-top: 5rem;
+        width: 100%;
+    }
+
+    #formEditarProduto .input-item {
+        flex: 1 1 60rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        /* margin-bottom: 1rem; */
+    }
+
+    #formEditarProduto .input-item label {
+        flex: 1 1 20%;
+    }
+
+    #formEditarProduto .input-item input,
+    #formEditarProduto .input-item select {
+        flex: 1 1 90%;
+    }
+
+</style>
+<script>
+    function fecharFormulario() {
+        document.getElementById("modalEditarProduto").style.display = "none";
+    }
+</script>

@@ -1,0 +1,72 @@
+{% macro tabela_dados(nomes_colunas, objetos, acoes) %}
+
+<table class="tb-dados">
+    <thead>
+        <tr>
+            {% for nome_coluna in nomes_colunas %}
+                <th class="tb-coluna">{{ nome_coluna }}</th>
+            {% endfor %}
+            {% if acoes %}
+                <th class="tb-coluna">Ações</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for objeto in objetos %}
+            <tr class="tb-grupo-linhas">
+                {% for nome_coluna in nomes_colunas %}
+                    <td class="tb-linha">{{ objeto[nome_coluna] }}</td>
+                {% endfor %}
+            
+                {% if acoes %}
+                  <td class="tb-linha">
+                    {% for nome_acao, funcao_handler in acoes.items() %}
+                        <button class="btn-acao-tb-dados" onclick="({{ funcao_handler }}({{ objeto }}))">{{ nome_acao }}</button>
+                    {% endfor %}
+                  </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    .tb-dados {
+      width: 80%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .tb-linha, .tb-coluna {
+      padding: 1.2rem 1.6rem;
+      border: 0.1rem solid var(--cor-primaria);
+      text-align: left;
+      font-size: 1.2rem;
+    }
+
+    .tb-coluna {
+      background-color: var(--cor-primaria);
+      color: white;
+    }
+
+    .tb-grupo-linhas:nth-child(even) {
+      background-color: var(--cor-clara);
+    }
+
+    .btn-acao-tb-dados {
+      background-color: var(--cor-secundaria);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: var(--arredondamento-borda);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-acao-tb-dados:hover {
+      background-color: var(--cor-destaque-texto);
+    }
+</style>
+{% endmacro %}
+

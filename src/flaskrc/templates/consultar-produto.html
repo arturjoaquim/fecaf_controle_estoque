@@ -1,0 +1,63 @@
+{% import 'componentes/tabela-dados.html' as macro_tb_rs %}
+{% extends "base-template/base.html" %}
+
+{% block titulo %}Consulta Produto - Stock Control{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='consultar-produto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/form.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+    <section id="consulta-produto">
+        <h2>Consulta Produto</h2>
+        <form action="{{ url_for('produto.consultar_produto') }}" method="post" id="form-consulta">
+            <div class="input-item">
+                <label for="nomeProduto">Nome</label>
+                <input type="text" name="nomeProduto" id="nomeProduto" placeholder="Nome Produto">
+            </div>
+            <div class="input-item">
+                <label for="quantiaEstoqueMinimo">Estoque Minimo</label>
+                <input type="number" name="quantiaEstoqueMinimo" id="quantiaEstoqueMinimo" placeholder="Quantia de estoque míninmo">
+            </div>
+            <div class="input-item">
+                <label for="dataCadastro">Data cadastro</label>
+                <input type="date" name="dataCadastro" id="dataCadastro">
+            </div>
+            <div class="input-item">
+                <label for="indicadorAtivo">Status</label>
+                <select name="indicadorAtivo" id="indicadorAtivo">
+                    <option value="">Selecione o status do produto</option>
+                    <option value="A">Ativo</option>
+                    <option value="I">Inativo</option>
+                </select>
+            </div>
+            <div class="rodape-form">
+                <button type="submit">Consultar</button>
+            </div>
+        </form>
+        <section id="resultado">
+            {% if produtos %}
+                <h2>Resultados</h2>
+                {{ macro_tb_rs.tabela_dados(["idProduto", "nomeProduto", "quantiaEstoque", "quantiaEstoqueMinimo", "dataCadastro", "indicadorAtivo", "idUsuarioCriador"], produtos, {"Editar": "abrirFormularioEditarProduto"}) }}
+            {% elif produtos is not none %}
+                <h2>Resultados</h2>
+                <p>Nenhum produto encontrado.</p>
+            {% endif %}
+        </section>
+        {% include 'componentes/form-editar-produto.html' %}
+    </section>
+    <script>
+        function abrirFormularioEditarProduto(produto) {
+            document.getElementById("modalEditarProduto").style.display = "flex";
+            console.log(produto)
+            document.getElementById("formEditarIdProduto").value = produto.idProduto;
+            document.getElementById("formEditarNomeProduto").value = produto.nomeProduto;
+            document.getElementById("formEditarDescricaoProduto").value = produto.descricaoProduto;
+            document.getElementById("formEditarQuantiaEstoqueMinimo").value = produto.quantiaEstoqueMinimo;
+            document.getElementById("formEditarIndicadorAtivo").value = produto.indicadorAtivo;
+            document.getElementById("formEditarQuantiaEstoque").value = produto.quantiaEstoque;
+            document.getElementById("formEditarDataCadastro").value = produto.dataCadastro;
+            document.getElementById("formEditarIdUsuario").value = produto.idUsuarioCriador;
+        }
+    </script>
+{% endblock %}

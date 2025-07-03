@@ -44,7 +44,7 @@ def cadastrar_produto() -> str | None:
 
 @bp.route("/consultar", methods=["GET","POST"])
 @login_required
-@trata_excecao_form("Consulta produto")
+@trata_excecao_form("produto.consultar_produto")
 def consultar_produto() -> str | None:
     if (request.method == "POST"):
         produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
@@ -54,12 +54,17 @@ def consultar_produto() -> str | None:
                     "id_usuario",
                     "data_cadastro"]
         )
+        print(request.form)
         produto_dto : ProdutoDTO = produto_mapper.load(request.form)
         produtos: list[ProdutoDTO] = consultar_produto_service.consultar_produtos(produto_dto)  # noqa: E501
         print(produto_dto)
         print("----------")
         print(produtos)
-    return "Consulta"
+        return render_template(
+            "consultar-produto.html", 
+            produtos=ProdutoDTOMapper(many=True).dump(produtos)
+        )
+    return render_template("consultar-produto.html", produtos=None)
 
 @bp_api.route("/consultar-abaixo-estoque-minimo", methods=["GET"])
 @login_required
