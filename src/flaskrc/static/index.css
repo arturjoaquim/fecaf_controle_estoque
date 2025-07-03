@@ -11,3 +11,7 @@
   color: var(--cor-texto-principal);
   margin-bottom: 1rem;
 }
+
+.main-content table {
+  margin-top: 3rem;
+}

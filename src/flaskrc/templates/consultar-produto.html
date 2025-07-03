@@ -46,18 +46,4 @@
         </section>
         {% include 'componentes/form-editar-produto.html' %}
     </section>
-    <script>
-        function abrirFormularioEditarProduto(produto) {
-            document.getElementById("modalEditarProduto").style.display = "flex";
-            console.log(produto)
-            document.getElementById("formEditarIdProduto").value = produto.idProduto;
-            document.getElementById("formEditarNomeProduto").value = produto.nomeProduto;
-            document.getElementById("formEditarDescricaoProduto").value = produto.descricaoProduto;
-            document.getElementById("formEditarQuantiaEstoqueMinimo").value = produto.quantiaEstoqueMinimo;
-            document.getElementById("formEditarIndicadorAtivo").value = produto.indicadorAtivo;
-            document.getElementById("formEditarQuantiaEstoque").value = produto.quantiaEstoque;
-            document.getElementById("formEditarDataCadastro").value = produto.dataCadastro;
-            document.getElementById("formEditarIdUsuario").value = produto.idUsuarioCriador;
-        }
-    </script>
 {% endblock %}

@@ -39,7 +39,7 @@
                 <input type="text" name="idUsuarioCriador" id="formEditarIdUsuario" disabled>
             </div>
             <div class="rodape-form">
-                <button type="button" onclick="fecharFormulario()" class="botao-cancelar">Cancelar</button>
+                <button type="button" onclick="fecharFormularioEditarProduto()" class="botao-cancelar">Cancelar</button>
                 <button type="submit">Salvar Alterações</button>
             </div>
         </form>
@@ -96,7 +96,20 @@
 
 </style>
 <script>
-    function fecharFormulario() {
+    function fecharFormularioEditarProduto() {
         document.getElementById("modalEditarProduto").style.display = "none";
     }
+
+    function abrirFormularioEditarProduto(produto) {
+            document.getElementById("modalEditarProduto").style.display = "flex";
+            console.log(produto)
+            document.getElementById("formEditarIdProduto").value = produto.idProduto;
+            document.getElementById("formEditarNomeProduto").value = produto.nomeProduto;
+            document.getElementById("formEditarDescricaoProduto").value = produto.descricaoProduto;
+            document.getElementById("formEditarQuantiaEstoqueMinimo").value = produto.quantiaEstoqueMinimo;
+            document.getElementById("formEditarIndicadorAtivo").value = produto.indicadorAtivo;
+            document.getElementById("formEditarQuantiaEstoque").value = produto.quantiaEstoque;
+            document.getElementById("formEditarDataCadastro").value = produto.dataCadastro;
+            document.getElementById("formEditarIdUsuario").value = produto.idUsuarioCriador;
+        }
 </script>
