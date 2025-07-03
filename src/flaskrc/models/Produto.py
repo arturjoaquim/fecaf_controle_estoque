@@ -7,6 +7,7 @@ from sqlalchemy import CHAR, Date, ForeignKey, Integer, Text, func, select
 from sqlalchemy.orm import Mapped, column_property, mapped_column, relationship
 
 from flaskrc.commons.enums.IndicadorMovimentoEnum import IndicadorMovimentoEnum
+from flaskrc.commons.exceptions.NegocioError import NegocioError
 from flaskrc.config.SQLAlchemyConfig import sql_alchemy as orm
 from flaskrc.models.Movimentacao import Movimentacao
 from flaskrc.models.TipoMovimentacao import TipoMovimentacao
@@ -49,3 +50,14 @@ class Produto(orm.Model):
             Movimentacao.id_produto == id_produto
         ).correlate_except(Movimentacao).scalar_subquery()
     )
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self._validar_quantia_estoque_minimo()
+
+    def _validar_quantia_estoque_minimo(self) -> None:
+        def _estoque_minimo_negativo(self: "Produto") -> None:
+            if (self.quantia_estoque_minimo < 0):
+                msg = "Quantia estoque mínimo não pode ser negativo."
+                raise NegocioError(msg)
+        _estoque_minimo_negativo(self)

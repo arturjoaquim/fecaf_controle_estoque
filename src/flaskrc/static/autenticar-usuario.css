@@ -17,3 +17,7 @@
 #autenticacao .input-item { /* Tamanho dos inputs do form */
     flex: 1 1 30rem;
 }
+
+#autenticacao button {
+    width: 100%;
+}

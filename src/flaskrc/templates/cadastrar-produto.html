@@ -1,0 +1,21 @@
+{% extends "base-template/base.html" %}
+
+{% block titulo %}Cadastro Produto - Stock Control{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='cadastrar-produto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/form.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+    <section id="cadastro-produto">
+        <h2>Cadastro Produto</h2>
+        <form action="{{ url_for('produto.cadastrar_produto') }}" method="post">
+            <input class="input-item" type="text" name="nomeProduto" id="nomeProduto" placeholder="Nome Produto" required>
+            <input class="input-item" type="number" name="quantiaEstoqueMinimo" id="quantiaEstoqueMinimo" placeholder="Quantia de estoque míninmo" required>
+            <textarea class="textarea-item" name="descricaoProduto" id="descricaoProduto" placeholder="Descrição do produto" required></textarea>
+            <div class="rodape-form">
+                <button type="submit">Cadastrar Produto</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

@@ -12,7 +12,7 @@
         <form action="{{ url_for('usuario.autenticar_usuario') }}" method="post">
             <input class="input-item" type="text" name="nomeUsuario" id="nomeUsuario" placeholder="Nome de Usuário" required>
             <input class="input-item" type="password" name="senhaUsuario" id="senhaUsuario" placeholder="Senha" required>
-            <button type="submit">Entrar</button>
+            <div class="rodape-form"><button type="submit">Entrar</button></div>
         </form>
     </section>
 {% endblock %}

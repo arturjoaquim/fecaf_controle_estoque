@@ -5,26 +5,37 @@ form {
     flex-wrap: wrap;
 }
 
-input {
+input, textarea {
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: var(--arredondamento-borda);
-    font-size: 1rem;
+    font-size: 1.4rem;
     transition: border 0.3s ease;
 }
 
-input:focus {
+textarea {
+    min-height: 8rem;
+}
+
+input:focus, textarea:focus {
     border-color: var(--cor-primaria);
     outline: none;
 }
 
-button[type="submit"] {
+.rodape-form {
+    display: flex;
     flex: 1 1 100%;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+button[type="submit"] {
     background-color: var(--cor-primaria);
     color: var(--cor-clara);
     border: none;
+    width: auto;
     padding: 0.75rem;
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-weight: bold;
     border-radius: var(--arredondamento-borda);
     cursor: pointer;

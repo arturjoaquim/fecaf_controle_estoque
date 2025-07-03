@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from flask import Blueprint, flash, request
+from flask import Blueprint, flash, render_template, request
 from flask_login import current_user, login_required
 
 from flaskrc.commons.mappers.ProdutoDTOMapper import ProdutoDTOMapper
@@ -21,7 +21,7 @@ consultar_produto_service = ConsultarProdutoService(ProdutoRepository())
 
 @bp.route("/cadastrar", methods=["GET", "POST"])
 @login_required
-@trata_excecao_form("hello")
+@trata_excecao_form("produto.cadastrar_produto")
 def cadastrar_produto() -> str | None:
     if (request.method == "POST"):
         usuario_logado: UsuarioDTO = current_user
@@ -36,10 +36,11 @@ def cadastrar_produto() -> str | None:
         produto_dto : ProdutoDTO = produto_mapper.load(request.form)
         novo_produto: ProdutoDTO = registrar_produto_service\
             .registrar_produto(produto_dto, usuario_logado.id_usr)
-        print(produto_dto)
-        print(novo_produto)
-        flash("Sucesso", "error")
-    return "hello"
+        flash(
+            f"Produto n°'{novo_produto.id_produto}' cadastrado com sucesso.",
+            category="success"
+        )
+    return render_template("cadastrar-produto.html")
 
 @bp.route("/consultar", methods=["GET","POST"])
 @login_required
@@ -58,7 +59,7 @@ def consultar_produto() -> str | None:
         print(produto_dto)
         print("----------")
         print(produtos)
-    return "Consulta produto"
+    return "Consulta"
 
 @bp_api.route("/consultar-abaixo-estoque-minimo", methods=["GET"])
 @login_required
