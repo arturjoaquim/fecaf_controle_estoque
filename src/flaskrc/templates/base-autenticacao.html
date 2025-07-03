@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block titulo %} {% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/mensagem-flash.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-template/base-autenticacao.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    {% block head %} {% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Stock Control</h1>
+        </header>
+
+        <main class="main-content">
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+                {% if mensagens %}
+                    <div id="flash-container">
+                        {% for categoria, msg in mensagens %}
+                            <div class="flash {{ categoria }}">{{ msg }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block conteudo %}
+            {% endblock %}
+        </main>
+    </div>
+</body>
+
+</html>

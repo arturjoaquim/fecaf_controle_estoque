@@ -2,7 +2,7 @@ import functools
 import traceback
 from collections.abc import Callable
 
-from flask import flash
+from flask import flash, redirect, url_for
 
 from flaskrc.config.SQLAlchemyConfig import sql_alchemy as orm
 
@@ -17,10 +17,10 @@ def trata_excecao_form(pagina: str) -> Callable:
             try:
                 return func(*args, **kwargs)
             except Exception as error:  # noqa: BLE001
-                flash(error.__str__(), "error")
+                flash(error.__str__(), category="error")
                 print(traceback.print_exc())
                 orm.session.rollback() # Reverte a transação no contexto de uma requisição HTTP  # noqa: E501
-                return pagina
+                return redirect(url_for(pagina), code=302)
         return wrapper
     return decorator
 

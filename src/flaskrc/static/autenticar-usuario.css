@@ -1,0 +1,19 @@
+@import url("global.css");
+
+#autenticacao {
+    display: flex;
+    gap: 3rem;
+    flex-direction: column;
+    background-color: white;
+    padding: 2rem;
+    border-radius: var(--arredondamento-borda);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    margin-top: 15rem;
+}
+
+#autenticacao .input-item { /* Tamanho dos inputs do form */
+    flex: 1 1 30rem;
+}

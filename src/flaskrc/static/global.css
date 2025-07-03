@@ -5,6 +5,10 @@
     --cor-texto-principal: #1a237e;
     --cor-destaque-texto: #2c5282;
     --cor-texto: #2c3e50;
+    --arredondamento-borda: 0.5rem;
+    --cor-sucesso: #38a169;
+    --cor-info: #3182ce;
+    --cor-error: #e53e3e;
 }
 
 /* Reset básico */
@@ -24,6 +28,7 @@ h1 {
 
 h2 {
   font-size: 2.4rem;
+  color: var(--cor-texto-principal);
 }
 
 p, a {

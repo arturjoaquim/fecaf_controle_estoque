@@ -1,0 +1,47 @@
+form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: var(--arredondamento-borda);
+    font-size: 1rem;
+    transition: border 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--cor-primaria);
+    outline: none;
+}
+
+button[type="submit"] {
+    flex: 1 1 100%;
+    background-color: var(--cor-primaria);
+    color: var(--cor-clara);
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: var(--arredondamento-borda);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--cor-secundaria);
+    transform: translateY(-2px);
+}
+
+button[type="submit"]:active {
+    background-color: var(--cor-destaque-texto);
+    transform: translateY(0);
+}
+
+button[type="submit"]:focus {
+    outline: 3px solid var(--cor-clara);
+    outline-offset: 2px;
+}

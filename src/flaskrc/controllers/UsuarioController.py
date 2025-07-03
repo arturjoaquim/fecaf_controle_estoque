@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from flask import Blueprint, flash, request
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_user
 
 from flaskrc.commons.mappers.UsuarioDTOMapper import UsuarioDTOMapper
@@ -32,12 +32,13 @@ def registrar_usuario() -> None | str:
     return "registro" # TODO @<ARTUR>: implementar pagina de registro
 
 @bp.route("/autenticar", methods=["GET", "POST"])
-@trata_excecao_form("autenticar")
+@trata_excecao_form("usuario.autenticar_usuario")
 def autenticar_usuario()-> None | str:
     if (request.method == "POST"):
         usuario_dto_mapper = UsuarioDTOMapper(campos_obrigatorios=["nome_usuario", "senha_usr"])  # noqa: E501
         usuario_dto: UsuarioDTO = usuario_dto_mapper.load(request.form)
         usuario_autenticado = autenticar_usuario_service.autenticar_usuario(usuario_dto.nome_usr, usuario_dto.senha_usr)  # noqa: E501
         login_user(usuario_autenticado)
-        # TODO @<ARTUR>: implementar redirect para pagina inicial
-    return "autenticar" # TODO @<ARTUR>: implementar pagina de login
+        flash("Autenticação realizada com sucesso.", category="success")
+        return redirect(url_for("home.home"), code=302)
+    return render_template("autenticar-usuario.html")

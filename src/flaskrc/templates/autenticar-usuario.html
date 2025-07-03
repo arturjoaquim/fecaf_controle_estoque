@@ -1,0 +1,18 @@
+{% extends "base-autenticacao.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='autenticar-usuario.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/form.css') }}">
+{% endblock %}
+{% block titulo %}Autenticar - Stock Control{% endblock %}
+
+{% block conteudo %}
+    <section id="autenticacao">
+        <h2>Autenticar Usuário</h2>
+        <form action="{{ url_for('usuario.autenticar_usuario') }}" method="post">
+            <input class="input-item" type="text" name="nomeUsuario" id="nomeUsuario" placeholder="Nome de Usuário" required>
+            <input class="input-item" type="password" name="senhaUsuario" id="senhaUsuario" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </section>
+{% endblock %}
