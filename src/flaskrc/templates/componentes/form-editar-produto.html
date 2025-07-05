@@ -1,10 +1,10 @@
 <div class="modal" id="modalEditarProduto">
     <section id="editar-produto">
         <h2>Editar Produto</h2>
-        <form action="#" method="post" id="formEditarProduto">
+        <form action="{{ url_for('produto.atualizar_produto') }}" method="post" id="formEditarProduto">
             <div class="input-item">
                 <label for="formEditarIdProduto">ID Produto</label>
-                <input type="text" name="idProduto" id="formEditarIdProduto" disabled>
+                <input type="text" name="idProduto" id="formEditarIdProduto" readonly>
             </div>
             <div class="input-item">
                 <label for="formEditarNomeProduto">Nome</label>

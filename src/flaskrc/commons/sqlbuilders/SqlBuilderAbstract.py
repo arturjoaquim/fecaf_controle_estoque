@@ -1,3 +1,4 @@
+from enum import Enum
 import functools
 from collections.abc import Callable
 from typing import TypeVar
@@ -44,6 +45,11 @@ class SqlBuilderAbstract:
     @filtro
     def filtro_menor_que(self: T, coluna: object, valor: object) -> T:
         self._filtros.append(coluna < valor)
+        return self
+
+    @filtro
+    def filtro_igual_enum(self: T, coluna:object, valor: Enum) -> T:
+        self._filtros.append(coluna == valor.value)
         return self
 
     def _validar_filtro_obrigatorio(

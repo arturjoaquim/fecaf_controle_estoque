@@ -1,8 +1,9 @@
 from typing import TYPE_CHECKING
 
-from flask import Blueprint, flash, render_template, request
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
+from flaskrc.services.produto.EditarProdutoService import EditarProdutoService
 from flaskrc.commons.mappers.ProdutoDTOMapper import ProdutoDTOMapper
 from flaskrc.commons.mappers.ProdutoMapper import ProdutoMapper
 from flaskrc.controllers.ControllerBase import trata_excecao_api, trata_excecao_form
@@ -19,6 +20,7 @@ bp_api = Blueprint("api-produto", __name__, url_prefix="/api/produto")
 
 registrar_produto_service = RegistrarProdutoService(ProdutoRepository(), ProdutoMapper())
 consultar_produto_service = ConsultarProdutoService(ProdutoRepository(), ProdutoMapper())
+atualizar_produto_service = EditarProdutoService(ProdutoRepository(), ProdutoMapper())
 
 @bp.route("/cadastrar", methods=["GET", "POST"])
 @login_required
@@ -84,3 +86,22 @@ def consultar_id_produto_por_nome() -> dict:
     produtos: list[ProdutoDTO] = consultar_produto_service\
         .consultar_id_produto_por_nome(nome_produto)
     return ProdutoDTOMapper(many=True, only=["id_produto", "nome_produto"]).dump(produtos)
+
+
+@bp.route("atualizar", methods=["POST"])
+@login_required
+@trata_excecao_form("produto.consultar_produto")
+def atualizar_produto():
+    produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
+        campos_obrigatorios=[
+            "id_produto",
+            "nome_produto",
+            "descricao_produto",
+            "indicador_ativo_enum",
+            "quantia_estoque_ninimo"
+        ]
+    )
+    produto_dto : ProdutoDTO = produto_mapper.load(request.form)
+    produto_atualizado: ProdutoDTO = atualizar_produto_service.editar_produto(produto_dto)
+    flash(f"Produto n°{produto_atualizado.id_produto} atualizado com sucesso.", "success")
+    return redirect(url_for("produto.consultar_produto"))

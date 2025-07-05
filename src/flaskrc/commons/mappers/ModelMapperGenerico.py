@@ -31,7 +31,15 @@ def converter_dto_para_model(dto: object, classe_modelo: type[Model]) -> Model:
     Converte um dto em um modelo através dos nomes dos campos,
     funciona inclusive quando dtos tem mais campos que model.
     """
-    campos_modelo: set = {atributo.key for atributo in classe_modelo.__mapper__.attrs if isinstance(atributo, ColumnProperty)}  # noqa: E501
+    campos_ignorados = {"metadata", "query", "registry", "denominator", "imag", "numerator", "real"}
+
+    campos_modelo: set = {
+        attr: getattr(classe_modelo, attr)
+        for attr in dir(classe_modelo)
+        if not attr.startswith("_")
+            and not callable(getattr(classe_modelo, attr))
+            and attr not in campos_ignorados
+        }  # noqa: E501
     campos_dto: dict = dto.__dict__
 
     dados_validos: dict = {
