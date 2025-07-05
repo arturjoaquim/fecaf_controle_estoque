@@ -12,8 +12,8 @@
         <h2>Consulta Produto</h2>
         <form action="{{ url_for('produto.consultar_produto') }}" method="post" id="form-consulta">
             <div class="input-item">
-                <label for="nomeProduto">Nome</label>
-                <input type="text" name="nomeProduto" id="nomeProduto" placeholder="Nome Produto">
+                <label for="idProduto">Nome Produto</label>
+                <select name="idProduto" id="idProduto"></select>
             </div>
             <div class="input-item">
                 <label for="quantiaEstoqueMinimo">Estoque Minimo</label>
@@ -46,4 +46,10 @@
         </section>
         {% include 'componentes/form-editar-produto.html' %}
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/select2.js') }}"></script>
+    <script>
+        iniciarSelect2('#idProduto', 'Selecione o produto', propriedadesAjaxSelect2.produtos)
+    </script>
 {% endblock %}

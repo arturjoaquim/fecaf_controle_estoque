@@ -20,7 +20,7 @@
 }
 
 #form-registrar-movimento .input-item {
-    flex: 1 1 60rem;
+    flex: 1 1 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -35,7 +35,7 @@
 #form-registrar-movimento .input-item input, 
 #form-registrar-movimento .input-item .select2-container--default  {
     flex: 1 1 90%;
-} 
+}
 
 #form-registrar-movimento button {
     max-width: 30rem;

@@ -49,7 +49,7 @@ def cadastrar_produto() -> str | None:
 def consultar_produto() -> str | None:
     if (request.method == "POST"):
         produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
-            only=["nome_produto",
+            only=["id_produto",
                     "quantia_estoque_minimo",
                     "indicador_ativo_enum",
                     "id_usuario",

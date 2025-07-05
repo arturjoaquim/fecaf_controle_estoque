@@ -12,16 +12,12 @@
         <h2>Consulta Movimentação</h2>
         <form action="{{ url_for('movimentacao.consultar_movimento') }}" method="post" id="form-consulta">
             <div class="input-item">
-                <label for="nome">Identificador Produto</label>
-                <input type="text" name="idProduto" id="idProduto" placeholder="Identificador Produto">
+                <label for="idProduto">Nome Produto</label>
+                <select name="idProduto" id="idProduto"></select>
             </div>
             <div class="input-item">
                 <label for="quantiaMovimentada">Quantia Movimentada</label>
                 <input type="number" name="quantiaMovimentada" id="quantiaMovimentada" placeholder="Quantia movimentada">
-            </div>
-            <div class="input-item">
-                <label for="dataCadastro">Data Cadastro</label>
-                <input type="date" name="dataCadastro" id="dataCadastro">
             </div>
             <div class="input-item">
                 <label for="dataMovimentacao">Data Movimentacao</label>
@@ -29,13 +25,7 @@
             </div>
             <div class="input-item">
                 <label for="idTipoMovimento">Tipo Movimento</label>
-                <select name="idTipoMovimento" id="idTipoMovimento">
-                    <option value="">Selecione o tipo do movimento</option>
-                </select>
-            </div>
-            <div class="input-item">
-                <label for="idUsuario">Identificador Usuário</label>
-                <input type="number" name="idUsuario" id="idUsuario" placeholder="Identificador Usuário Responsável">
+                <select name="idTipoMovimento" id="idTipoMovimento"></select>
             </div>
             <div class="rodape-form">
                 <button type="submit">Consultar</button>
@@ -52,4 +42,11 @@
         </section>
         {% include 'componentes/form-editar-produto.html' %}
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/select2.js') }}"></script>
+    <script>
+        iniciarSelect2('#idProduto', 'Selecione o produto', propriedadesAjaxSelect2.produtos)
+        iniciarSelect2('#idTipoMovimento', 'Selecione o tipo movimento', propriedadesAjaxSelect2.tiposMovimento)
+    </script>
 {% endblock %}

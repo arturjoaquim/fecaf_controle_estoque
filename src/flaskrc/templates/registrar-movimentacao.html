@@ -32,7 +32,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/select2.js') }}"></script>
     <script>
-        console.log(propriedadesAjaxSelect2.produtos)
         iniciarSelect2('#idProduto', 'Selecione o produto', propriedadesAjaxSelect2.produtos)
         iniciarSelect2('#idTipoMovimento', 'Selecione o tipo movimento', propriedadesAjaxSelect2.tiposMovimento)
     </script>

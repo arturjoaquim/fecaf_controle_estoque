@@ -18,6 +18,7 @@ class ProdutoRepository:
 
     def consultar_produtos(self, filtro: ProdutoDTO) -> set[Produto]:
         query_builder = ProdutoQueryBuilder(filtro_obrigatorio=False).selecionar_tudo()\
+            .filtro_id(filtro.id_produto)\
             .filtro_nome(filtro.nome_produto)\
             .filtro_data_cadastro(filtro.data_cadastro)\
             .filtro_indicador_ativo(filtro.indicador_ativo_enum)\

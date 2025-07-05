@@ -33,7 +33,7 @@
 } 
 
 #form-consulta .input-item input, 
-#form-consulta .input-item select  {
+#form-consulta .input-item .select2-container--default  {
     flex: 1 1 90%;
 } 
 
