@@ -20,7 +20,7 @@ class ProdutoRepository:
         query_builder = ProdutoQueryBuilder(filtro_obrigatorio=False).selecionar_tudo()\
             .filtro_nome(filtro.nome_produto)\
             .filtro_data_cadastro(filtro.data_cadastro)\
-            .filtro_indicador_ativo(filtro.indicador_ativo)\
+            .filtro_indicador_ativo(filtro.indicador_ativo_enum)\
             .filtro_estoque_minimo(filtro.quantia_estoque_minimo)\
             .filtro_id_usuario(filtro.id_usuario)
         comando_sql: Select = query_builder.construir_consulta()

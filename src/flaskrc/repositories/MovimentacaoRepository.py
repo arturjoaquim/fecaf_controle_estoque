@@ -1,4 +1,6 @@
-from sqlalchemy import Select
+from datetime import date
+
+from sqlalchemy import Select, func, select
 
 from flaskrc.commons.dtos.MovimentoDTO import MovimentoDTO
 from flaskrc.commons.querybuilders.MovimentacaoQueryBuilder import (

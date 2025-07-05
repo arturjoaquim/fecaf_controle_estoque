@@ -10,6 +10,7 @@ from flaskrc.controllers.MovimentacaoController import bp as bp_movimentacao
 from flaskrc.controllers.MovimentacaoController import bp_api as bp_movimentacao_api
 from flaskrc.controllers.ProdutoController import bp as bp_produto
 from flaskrc.controllers.ProdutoController import bp_api as bp_produto_api
+from flaskrc.controllers.TipoMovimentacaoController import bp_api as bp_tp_mov_api
 from flaskrc.controllers.UsuarioController import bp as bp_usuario
 from flaskrc.controllers.UsuarioController import bp_api as bp_usuario_api
 from flaskrc.models import *  # noqa: F403
@@ -38,6 +39,7 @@ def configurar_app(app: Flask) -> None:
     app.register_blueprint(bp_movimentacao)
     app.register_blueprint(bp_movimentacao_api)
     app.register_blueprint(bp_home)
+    app.register_blueprint(bp_tp_mov_api)
     sql_alchemy.init_app(app)
     login_manager.init_app(app)
     adicionar_controle_transacional_por_sessao(app)

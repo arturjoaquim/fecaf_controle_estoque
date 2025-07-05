@@ -13,3 +13,11 @@ class TipoMovimentacaoRepository:
             TipoMovimentacao.id_tipo_mov == id_tipo_movimentacao
         )
         return orm.session.execute(consulta).scalar_one_or_none()
+
+    def consultar_id_tipo_movimentacao_por_nome(
+            self,
+            nome_tipo_movimentacao: str
+        ) -> list[TipoMovimentacao]:
+        consulta = select(TipoMovimentacao)\
+            .where(TipoMovimentacao.nome_tipo_mov.like(f"%{nome_tipo_movimentacao}%"))
+        return orm.session.execute(consulta).scalars().all()

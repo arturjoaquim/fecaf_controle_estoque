@@ -2,6 +2,7 @@ from datetime import date
 
 from sqlalchemy import Select, select
 
+from flaskrc.commons.enums.IndicadorAtivoEnum import IndicadorAtivoEnum
 from flaskrc.models.Produto import Produto
 
 
@@ -44,11 +45,11 @@ class ProdutoQueryBuilder:
             )
         return self
 
-    def filtro_indicador_ativo(self, indicador_ativo: str) -> "ProdutoQueryBuilder":
+    def filtro_indicador_ativo(self, indicador_ativo: IndicadorAtivoEnum) -> "ProdutoQueryBuilder":
         self._validar_filtro_obrigatorio(indicador_ativo)
         if indicador_ativo is not None:
             self._consulta = self._consulta.where(
-                Produto.indicador_ativo == indicador_ativo
+                Produto.indicador_ativo == indicador_ativo.value
             )
         return self
 

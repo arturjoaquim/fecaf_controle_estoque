@@ -1,9 +1,9 @@
 from enum import Enum
 
 
-class IndicadorMovimentoEnum(Enum):
-    ENTRADA = "E"
-    SAIDA = "S"
+class IndicadorAtivoEnum(Enum):
+    ATIVO = "A"
+    INATIVO = "I"
 
     @classmethod
     def receber_valor(cls, nome: str) -> str | None:

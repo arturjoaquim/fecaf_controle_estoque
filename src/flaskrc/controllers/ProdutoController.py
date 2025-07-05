@@ -4,6 +4,7 @@ from flask import Blueprint, flash, render_template, request
 from flask_login import current_user, login_required
 
 from flaskrc.commons.mappers.ProdutoDTOMapper import ProdutoDTOMapper
+from flaskrc.commons.mappers.ProdutoMapper import ProdutoMapper
 from flaskrc.controllers.ControllerBase import trata_excecao_api, trata_excecao_form
 from flaskrc.repositories.ProdutoRepository import ProdutoRepository
 from flaskrc.services.produto.ConsultarProdutoService import ConsultarProdutoService
@@ -16,8 +17,8 @@ if TYPE_CHECKING:
 bp = Blueprint("produto", __name__, url_prefix="/produto")
 bp_api = Blueprint("api-produto", __name__, url_prefix="/api/produto")
 
-registrar_produto_service = RegistrarProdutoService(ProdutoRepository())
-consultar_produto_service = ConsultarProdutoService(ProdutoRepository())
+registrar_produto_service = RegistrarProdutoService(ProdutoRepository(), ProdutoMapper())
+consultar_produto_service = ConsultarProdutoService(ProdutoRepository(), ProdutoMapper())
 
 @bp.route("/cadastrar", methods=["GET", "POST"])
 @login_required
@@ -50,7 +51,7 @@ def consultar_produto() -> str | None:
         produto_mapper: ProdutoDTOMapper = ProdutoDTOMapper(
             only=["nome_produto",
                     "quantia_estoque_minimo",
-                    "indicador_ativo",
+                    "indicador_ativo_enum",
                     "id_usuario",
                     "data_cadastro"]
         )
@@ -69,7 +70,17 @@ def consultar_produto() -> str | None:
 @bp_api.route("/consultar-abaixo-estoque-minimo", methods=["GET"])
 @login_required
 @trata_excecao_api
-def consultar_produtos_abaixo_estoque_minimo() -> str:
+def consultar_produtos_abaixo_estoque_minimo() -> dict:
     produtos: list[ProdutoDTO] = consultar_produto_service\
         .consultar_produtos_abaixo_estoque_minimo()
-    return ProdutoDTOMapper().dump(produtos, many=True), 200
+    return ProdutoDTOMapper(many=True).dump(produtos), 200
+
+@bp_api.route("/consultar-id-por-nome", methods=["GET"])
+@login_required
+@trata_excecao_api
+def consultar_id_produto_por_nome() -> dict:
+    nome_produto: str = request.args.get("nomeProduto", "")
+    print(nome_produto)
+    produtos: list[ProdutoDTO] = consultar_produto_service\
+        .consultar_id_produto_por_nome(nome_produto)
+    return ProdutoDTOMapper(many=True, only=["id_produto", "nome_produto"]).dump(produtos)

@@ -1,0 +1,39 @@
+{% extends "base-template/base.html" %}
+
+{% block titulo %}Registrar Movimento - Stock Control{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='registrar-movimentacao.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/form.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+    <section id="registro-movimento">
+        <h2>Registrar Movimento</h2>
+        <form action="{{ url_for('movimentacao.registrar_movimento') }}" method="post" id="form-registrar-movimento">
+            <div class="input-item">
+                <label for="idProduto">Nome Produto</label>
+                <select name="idProduto" id="idProduto" required></select>
+            </div>
+            <div class="input-item">
+                <label for="quantiaMovimentada">Quantia Movimentada</label>
+                <input type="number" name="quantiaMovimentada" id="quantiaMovimentada" placeholder="Quantia movimentada" required>
+            </div>
+            <div class="input-item">
+                <label for="idTipoMovimento">Tipo Movimento</label>
+                <select name="idTipoMovimento" id="idTipoMovimento" required></select>
+            </div>
+            <div class="rodape-form">
+                <button type="submit">Registrar Movimento</button>
+            </div>
+        </form>
+    </section>
+    <!-- JS do Select2 + jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/select2.js') }}"></script>
+    <script>
+        console.log(propriedadesAjaxSelect2.produtos)
+        iniciarSelect2('#idProduto', 'Selecione o produto', propriedadesAjaxSelect2.produtos)
+        iniciarSelect2('#idTipoMovimento', 'Selecione o tipo movimento', propriedadesAjaxSelect2.tiposMovimento)
+    </script>
+{% endblock %}

@@ -1,0 +1,42 @@
+@import url('global.css');
+
+#registro-movimento {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: var(--arredondamento-borda);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 2rem;
+    min-height: 90vh;
+    padding-left: 5rem;
+}
+
+#form-registrar-movimento {
+    margin-top: 5rem;
+    justify-content: center;
+    align-items: start;
+    max-width: 80%;
+}
+
+#form-registrar-movimento .input-item {
+    flex: 1 1 60rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* margin-bottom: 1rem; */
+}
+
+#form-registrar-movimento .input-item label {
+    flex: 1 1 20%;
+} 
+
+#form-registrar-movimento .input-item input, 
+#form-registrar-movimento .input-item .select2-container--default  {
+    flex: 1 1 90%;
+} 
+
+#form-registrar-movimento button {
+    max-width: 30rem;
+}

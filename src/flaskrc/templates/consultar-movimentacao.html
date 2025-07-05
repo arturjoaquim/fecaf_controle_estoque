@@ -1,0 +1,55 @@
+{% import 'componentes/tabela-dados.html' as macro_tb_rs %}
+{% extends "base-template/base.html" %}
+
+{% block titulo %}Consulta Movimentação - Stock Control{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='consultar-movimentacao.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/form.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+    <section id="consulta-movimentacao">
+        <h2>Consulta Movimentação</h2>
+        <form action="{{ url_for('movimentacao.consultar_movimento') }}" method="post" id="form-consulta">
+            <div class="input-item">
+                <label for="nome">Identificador Produto</label>
+                <input type="text" name="idProduto" id="idProduto" placeholder="Identificador Produto">
+            </div>
+            <div class="input-item">
+                <label for="quantiaMovimentada">Quantia Movimentada</label>
+                <input type="number" name="quantiaMovimentada" id="quantiaMovimentada" placeholder="Quantia movimentada">
+            </div>
+            <div class="input-item">
+                <label for="dataCadastro">Data Cadastro</label>
+                <input type="date" name="dataCadastro" id="dataCadastro">
+            </div>
+            <div class="input-item">
+                <label for="dataMovimentacao">Data Movimentacao</label>
+                <input type="date" name="dataMovimentacao" id="dataMovimentacao">
+            </div>
+            <div class="input-item">
+                <label for="idTipoMovimento">Tipo Movimento</label>
+                <select name="idTipoMovimento" id="idTipoMovimento">
+                    <option value="">Selecione o tipo do movimento</option>
+                </select>
+            </div>
+            <div class="input-item">
+                <label for="idUsuario">Identificador Usuário</label>
+                <input type="number" name="idUsuario" id="idUsuario" placeholder="Identificador Usuário Responsável">
+            </div>
+            <div class="rodape-form">
+                <button type="submit">Consultar</button>
+            </div>
+        </form>
+        <section id="resultado">
+            {% if movimentos %}
+                <h2>Resultados</h2>
+                {{ macro_tb_rs.tabela_dados(["idMovimentacao","idProduto", "quantiaMovimentada", "dataMovimentacao", "idTipoMovimento", "dataCadastro", "idUsuario"], movimentos) }}
+            {% elif movimentos is not none %}
+                <h2>Resultados</h2>
+                <p>Nenhum movimento encontrado.</p>
+            {% endif %}
+        </section>
+        {% include 'componentes/form-editar-produto.html' %}
+    </section>
+{% endblock %}

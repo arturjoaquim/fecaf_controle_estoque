@@ -10,12 +10,29 @@ form label {
     font-size: 1.2rem;
 }
 
-input, textarea, select {
+input, textarea, select, .select2-container--default .select2-selection--single {
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: var(--arredondamento-borda);
     font-size: 1.4rem;
     transition: border 0.3s ease;
+}
+
+.select2-container .select2-selection--single {
+    height: auto;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: normal;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    height: auto;
 }
 
 textarea {

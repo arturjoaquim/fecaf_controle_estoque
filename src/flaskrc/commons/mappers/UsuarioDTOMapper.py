@@ -1,13 +1,14 @@
 from marshmallow import Schema, fields, post_load
 
 from flaskrc.commons.dtos.UsuarioDTO import UsuarioDTO
+from flaskrc.commons.enums.IndicadorAtivoEnum import IndicadorAtivoEnum
 
 
 class UsuarioDTOMapper(Schema):
     id_usr = fields.Int(data_key="idUsuario")
     nome_usr = fields.Str(data_key="nomeUsuario")
     data_cadastro = fields.Date(data_key="dataCadastro")
-    indicador_ativo = fields.Str(data_key="indicadorAtivo")
+    indicador_ativo_enum = fields.Enum(IndicadorAtivoEnum, by_value=False, data_key="indicadorAtivo")  # noqa: E501
     senha_usr = fields.Str(data_key="senhaUsuario")
 
     def __init__(self, *, campos_obrigatorios: list | None=None, **keyargs: any) -> None:  # noqa: E501

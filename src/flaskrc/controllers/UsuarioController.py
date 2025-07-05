@@ -4,6 +4,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_user
 
 from flaskrc.commons.mappers.UsuarioDTOMapper import UsuarioDTOMapper
+from flaskrc.commons.mappers.UsuarioMapper import UsuarioMapper
 from flaskrc.controllers.ControllerBase import trata_excecao_form
 from flaskrc.repositories.UsuarioRepository import UsuarioRepository
 from flaskrc.services.usuario.AutenticarUsuarioService import AutenticarUsuarioService
@@ -15,8 +16,8 @@ if TYPE_CHECKING:
 bp = Blueprint("usuario", __name__, url_prefix="/usuario")
 bp_api = Blueprint("api-usuario", __name__, url_prefix="/api/usuario")
 
-registrar_usuario_service = RegistrarUsuarioService(UsuarioRepository())
-autenticar_usuario_service = AutenticarUsuarioService(UsuarioRepository())
+registrar_usuario_service = RegistrarUsuarioService(UsuarioRepository(), UsuarioMapper())
+autenticar_usuario_service = AutenticarUsuarioService(UsuarioRepository(), UsuarioMapper())
 
 @bp.route("/registrar", methods=["GET", "POST"])
 @trata_excecao_form("registro")
@@ -40,5 +41,6 @@ def autenticar_usuario()-> None | str:
         usuario_autenticado = autenticar_usuario_service.autenticar_usuario(usuario_dto.nome_usr, usuario_dto.senha_usr)  # noqa: E501
         login_user(usuario_autenticado)
         flash("Autenticação realizada com sucesso.", category="success")
+        print("Sucesso")
         return redirect(url_for("home.home"), code=302)
     return render_template("autenticar-usuario.html")

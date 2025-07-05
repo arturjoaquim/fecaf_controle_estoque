@@ -1,8 +1,9 @@
 from typing import TYPE_CHECKING
 
-from flask import Blueprint, request
+from flask import Blueprint, flash, render_template, request
 from flask_login import current_user, login_required
 
+from flaskrc.commons.mappers.MovimentacaoMapper import MovimentacaoMapper
 from flaskrc.commons.mappers.MovimentoDTOMapper import MovimentoDTOMapper
 from flaskrc.controllers.ControllerBase import trata_excecao_form
 from flaskrc.repositories.MovimentacaoRepository import MovimentacaoRepository
@@ -25,21 +26,22 @@ bp_api = Blueprint("api-movimentacao", __name__, url_prefix="/api/movimentacao")
 registrar_movimento_service = RegistrarMovimentacaoService(
     MovimentacaoRepository(),
     TipoMovimentacaoRepository(),
-    ProdutoRepository()
+    ProdutoRepository(),
+    MovimentacaoMapper()
 )
 consultar_movimento_service = ConsultarMovimentacaoService(
-    MovimentacaoRepository()
+    MovimentacaoRepository(),
+    MovimentacaoMapper()
 )
 
 @bp.route("/registrar", methods=["GET","POST"])
 @login_required
-@trata_excecao_form("cadastro movimento")
+@trata_excecao_form("movimentacao.registrar_movimento")
 def registrar_movimento() -> str|None:
     if request.method == "POST":
         dados_necessarios = [
             "id_produto",
             "quantia_movimentada",
-            "data_movimentacao",
             "id_tipo_movimento"
         ]
 
@@ -53,12 +55,15 @@ def registrar_movimento() -> str|None:
         novo_movimento = registrar_movimento_service.registrar_movimento(
             movimento_dto, usuario_logado.id_usr
         )
-        print(novo_movimento)
-    return "cadastro movimento"
+        flash(
+            f"Movimento n°'{novo_movimento.id_movimentacao}' registrado com sucesso.",
+            category="success"
+        )
+    return render_template("registrar-movimentacao.html")
 
 @bp.route("/consultar", methods=["GET","POST"])
 @login_required
-@trata_excecao_form("consulta movimento")
+@trata_excecao_form("movimentacao.consultar_movimento")
 def consultar_movimento() -> str|None:
     if request.method == "POST":
         movimento_mapper = MovimentoDTOMapper(
@@ -73,7 +78,11 @@ def consultar_movimento() -> str|None:
         )
 
         filtro: MovimentoDTO = movimento_mapper.load(request.form)
-        lista_movimentos: list[MovimentoDTO] = consultar_movimento_service\
+        movimentos: list[MovimentoDTO] = consultar_movimento_service\
             .consultar_movimentacoes(filtro)
-        print(lista_movimentos)
-    return "consulta movimento"
+        print(movimentos)
+        return render_template(
+            "consultar-movimentacao.html", 
+            movimentos=MovimentoDTOMapper(many=True).dump(movimentos)
+        )
+    return render_template("consultar-movimentacao.html", movimentos=None)

@@ -2,22 +2,29 @@ from flask_sqlalchemy.model import Model
 from sqlalchemy.orm.properties import ColumnProperty
 
 
-def converter_para_dicionario(model: Model, *, campos_excluidos: set|None=None) -> dict:  # noqa: E501
+def converter_para_dicionario(model: Model, *, campos_ignorados: list|None=None) -> dict:  # noqa: E501
     """
     Converte um objeto de modelo em um dicionário.
+    Utiliza set para obter tempos O(1) em verificações.
     """
     if model is None:
         return {}
 
-    if campos_excluidos is None:
-        campos_excluidos = {}
+    campos_ignorados_padrao = {"metadata", "query", "registry", "denominator", "imag", "numerator", "real"}
+
+    if campos_ignorados is None:
+        campos_ignorados = campos_ignorados_padrao
+    else:
+        campos_ignorados = set(campos_ignorados)
+        campos_ignorados.update(campos_ignorados_padrao)
 
     return {
-            atributo.key: getattr(model, atributo.key)
-            for atributo in model.__mapper__.attrs
-            if atributo.key not in campos_excluidos
-                and isinstance(atributo, ColumnProperty)
-        }
+        attr: getattr(model, attr)
+        for attr in dir(model)
+        if not attr.startswith("_")
+            and not callable(getattr(model, attr))
+            and attr not in campos_ignorados
+    }
 
 def converter_dto_para_model(dto: object, classe_modelo: type[Model]) -> Model:
     """
