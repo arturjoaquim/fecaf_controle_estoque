@@ -1,0 +1,46 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [ "main", "staging" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+          pip install pytest pytest-cov flake8 build
+
+      - name: Rodar Lint
+        run: |
+          flake8 src tests
+
+      - name: Rodar Testes
+        run: |
+          pytest
+
+      - name: Gerar Artefato
+        run: |
+          python -m build
+
+      - name: Upload Artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package
+          path: dist/
